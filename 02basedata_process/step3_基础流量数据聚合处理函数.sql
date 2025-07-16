@@ -286,66 +286,73 @@ BEGIN
         update_time
     )
     SELECT
-        f.start_square_code AS origin_id,
-        f.end_square_code AS destination_id,
-        'tollsquare' AS origin_type,
-        'tollsquare' AS destination_type,
-        'tollsquare-tollsquare' AS od_type_combination,
-        t.pattern_type,
-        t.hour_of_day,
+        origin_id,
+        destination_id,
+        origin_type,
+        destination_type,
+        od_type_combination,
+        pattern_type,
+        hour,
         v_batch_id AS batch_id,
-        AVG(
-          COALESCE(f.k1,0)+COALESCE(f.k2,0)+COALESCE(f.k3,0)+COALESCE(f.k4,0)+
-          COALESCE(f.h1,0)+COALESCE(f.h2,0)+COALESCE(f.h3,0)+COALESCE(f.h4,0)+COALESCE(f.h5,0)+COALESCE(f.h6,0)+
-          COALESCE(f.t1,0)+COALESCE(f.t2,0)+COALESCE(f.t3,0)+COALESCE(f.t4,0)+COALESCE(f.t5,0)+COALESCE(f.t6,0)
-        ) AS mean,
-        STDDEV_POP(
-          COALESCE(f.k1,0)+COALESCE(f.k2,0)+COALESCE(f.k3,0)+COALESCE(f.k4,0)+
-          COALESCE(f.h1,0)+COALESCE(f.h2,0)+COALESCE(f.h3,0)+COALESCE(f.h4,0)+COALESCE(f.h5,0)+COALESCE(f.h6,0)+
-          COALESCE(f.t1,0)+COALESCE(f.t2,0)+COALESCE(f.t3,0)+COALESCE(f.t4,0)+COALESCE(f.t5,0)+COALESCE(f.t6,0)
-        ) AS stddev,
-        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY 
-          COALESCE(f.k1,0)+COALESCE(f.k2,0)+COALESCE(f.k3,0)+COALESCE(f.k4,0)+
-          COALESCE(f.h1,0)+COALESCE(f.h2,0)+COALESCE(f.h3,0)+COALESCE(f.h4,0)+COALESCE(f.h5,0)+COALESCE(f.h6,0)+
-          COALESCE(f.t1,0)+COALESCE(f.t2,0)+COALESCE(f.t3,0)+COALESCE(f.t4,0)+COALESCE(f.t5,0)+COALESCE(f.t6,0)
-        ) AS median,
-        PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY 
-          COALESCE(f.k1,0)+COALESCE(f.k2,0)+COALESCE(f.k3,0)+COALESCE(f.k4,0)+
-          COALESCE(f.h1,0)+COALESCE(f.h2,0)+COALESCE(f.h3,0)+COALESCE(f.h4,0)+COALESCE(f.h5,0)+COALESCE(f.h6,0)+
-          COALESCE(f.t1,0)+COALESCE(f.t2,0)+COALESCE(f.t3,0)+COALESCE(f.t4,0)+COALESCE(f.t5,0)+COALESCE(f.t6,0)
-        ) AS p75,
-        PERCENTILE_CONT(0.85) WITHIN GROUP (ORDER BY 
-          COALESCE(f.k1,0)+COALESCE(f.k2,0)+COALESCE(f.k3,0)+COALESCE(f.k4,0)+
-          COALESCE(f.h1,0)+COALESCE(f.h2,0)+COALESCE(f.h3,0)+COALESCE(f.h4,0)+COALESCE(f.h5,0)+COALESCE(f.h6,0)+
-          COALESCE(f.t1,0)+COALESCE(f.t2,0)+COALESCE(f.t3,0)+COALESCE(f.t4,0)+COALESCE(f.t5,0)+COALESCE(f.t6,0)
-        ) AS p85,
+        AVG(od_flow) AS mean,
+        STDDEV_POP(od_flow) AS stddev,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY od_flow) AS median,
+        PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY od_flow) AS p75,
+        PERCENTILE_CONT(0.85) WITHIN GROUP (ORDER BY od_flow) AS p85,
         COUNT(*) AS data_points_count,
-        AVG(f.avg_travel_time) AS avg_travel_time,
-        AVG(COALESCE(f.k1,0) + COALESCE(f.k2,0)) AS passenger_small,
-        AVG(COALESCE(f.k3,0) + COALESCE(f.k4,0)) AS passenger_large,
-        AVG(COALESCE(f.h1,0) + COALESCE(f.h2,0)) AS truck_small,
-        AVG(COALESCE(f.h3,0) + COALESCE(f.h4,0) + COALESCE(f.h5,0) + COALESCE(f.h6,0)) AS truck_large,
-        AVG(COALESCE(f.t1,0) + COALESCE(f.t2,0)) AS special_small,
-        AVG(COALESCE(f.t3,0) + COALESCE(f.t4,0) + COALESCE(f.t5,0) + COALESCE(f.t6,0)) AS special_large,
-        CASE WHEN SUM(
-            COALESCE(f.k1,0)+COALESCE(f.k2,0)+COALESCE(f.k3,0)+COALESCE(f.k4,0)+
-            COALESCE(f.h1,0)+COALESCE(f.h2,0)+COALESCE(f.h3,0)+COALESCE(f.h4,0)+COALESCE(f.h5,0)+COALESCE(f.h6,0)+
-            COALESCE(f.t1,0)+COALESCE(f.t2,0)+COALESCE(f.t3,0)+COALESCE(f.t4,0)+COALESCE(f.t5,0)+COALESCE(f.t6,0)
-        ) = 0 THEN 0 ELSE
-            SUM(
-                COALESCE(f.h1,0)+COALESCE(f.h2,0)+COALESCE(f.h3,0)+COALESCE(f.h4,0)+COALESCE(f.h5,0)+COALESCE(f.h6,0)+
-                COALESCE(f.t1,0)+COALESCE(f.t2,0)+COALESCE(f.t3,0)+COALESCE(f.t4,0)+COALESCE(f.t5,0)+COALESCE(f.t6,0)
-            )::NUMERIC / NULLIF(SUM(
-                COALESCE(f.k1,0)+COALESCE(f.k2,0)+COALESCE(f.k3,0)+COALESCE(f.k4,0)+
-                COALESCE(f.h1,0)+COALESCE(f.h2,0)+COALESCE(f.h3,0)+COALESCE(f.h4,0)+COALESCE(f.h5,0)+COALESCE(f.h6,0)+
-                COALESCE(f.t1,0)+COALESCE(f.t2,0)+COALESCE(f.t3,0)+COALESCE(f.t4,0)+COALESCE(f.t5,0)+COALESCE(f.t6,0)
-            ),0)
-        END AS truck_ratio,
+        AVG(avg_travel_time) AS avg_travel_time,
+        AVG(passenger_small) AS passenger_small,
+        AVG(passenger_large) AS passenger_large,
+        AVG(truck_small) AS truck_small,
+        AVG(truck_large) AS truck_large,
+        AVG(special_small) AS special_small,
+        AVG(special_large) AS special_large,
+        CASE WHEN SUM(od_flow) = 0 THEN 0 ELSE SUM(truck_small + truck_large + special_small + special_large)::NUMERIC / NULLIF(SUM(od_flow),0) END AS truck_ratio,
         NOW() AS update_time
-    FROM dwd.dwd_od_g4202 f
-    JOIN LATERAL user_extract_time_features(f.start_time) t ON TRUE
-    WHERE f.start_time >= v_min_time AND f.start_time <= v_max_time
-    GROUP BY f.start_square_code, f.end_square_code, t.pattern_type, t.hour_of_day;
+    FROM (
+        SELECT
+            COALESCE(f.start_square_code, f.start_station_code) AS origin_id,
+            COALESCE(f.end_square_code, f.end_station_code) AS destination_id,
+            CASE 
+                WHEN f.start_square_code IS NOT NULL THEN 'tollsquare'
+                WHEN f.start_station_code IS NOT NULL THEN 'gantry'
+                ELSE 'unknown'
+            END AS origin_type,
+            CASE 
+                WHEN f.end_square_code IS NOT NULL THEN 'tollsquare'
+                WHEN f.end_station_code IS NOT NULL THEN 'gantry'
+                ELSE 'unknown'
+            END AS destination_type,
+            CASE 
+                WHEN f.start_square_code IS NOT NULL AND f.end_square_code IS NOT NULL THEN 'tollsquare-tollsquare'
+                WHEN f.start_station_code IS NOT NULL AND f.end_station_code IS NOT NULL THEN 'gantry-gantry'
+                WHEN f.start_square_code IS NOT NULL AND f.end_station_code IS NOT NULL THEN 'tollsquare-gantry'
+                WHEN f.start_station_code IS NOT NULL AND f.end_square_code IS NOT NULL THEN 'gantry-tollsquare'
+                ELSE 'mixed'
+            END AS od_type_combination,
+            t.pattern_type,
+            t.hour_of_day AS hour,
+            COUNT(*) AS od_flow,
+            AVG(EXTRACT(EPOCH FROM (f.end_time - f.start_time))) AS avg_travel_time,
+            SUM(CASE WHEN f.vehicle_type IN ('k1','k2') THEN 1 ELSE 0 END) AS passenger_small,
+            SUM(CASE WHEN f.vehicle_type IN ('k3','k4') THEN 1 ELSE 0 END) AS passenger_large,
+            SUM(CASE WHEN f.vehicle_type IN ('h1','h2') THEN 1 ELSE 0 END) AS truck_small,
+            SUM(CASE WHEN f.vehicle_type IN ('h3','h4','h5','h6') THEN 1 ELSE 0 END) AS truck_large,
+            SUM(CASE WHEN f.vehicle_type IN ('t1','t2') THEN 1 ELSE 0 END) AS special_small,
+            SUM(CASE WHEN f.vehicle_type IN ('t3','t4','t5','t6') THEN 1 ELSE 0 END) AS special_large
+        FROM dwd.dwd_od_g4202 f
+        JOIN LATERAL user_extract_time_features(f.start_time) t ON TRUE
+        WHERE f.start_time >= v_min_time AND f.start_time <= v_max_time
+          AND f.end_time >= f.start_time
+        GROUP BY 
+            COALESCE(f.start_square_code, f.start_station_code), 
+            COALESCE(f.end_square_code, f.end_station_code), 
+            t.pattern_type, 
+            t.hour_of_day,
+            f.start_square_code, f.start_station_code, f.end_square_code, f.end_station_code
+    ) sub
+    GROUP BY 
+        origin_id, destination_id, origin_type, destination_type, od_type_combination, pattern_type, hour;
 END;
 $$ LANGUAGE plpgsql;
 
