@@ -1,0 +1,21 @@
+# OD数据分析脚本依赖包
+# 安装命令: pip install -r requirements.txt
+
+# 数据处理
+pandas>=1.3.0
+numpy>=1.21.0
+
+# 数据库连接
+psycopg2-binary>=2.9.0
+SQLAlchemy>=1.4.0
+
+# 数据可视化
+matplotlib>=3.5.0
+seaborn>=0.11.0
+plotly>=5.0.0
+
+# 环境变量管理（可选，如果需要更高级的.env支持）
+# python-dotenv>=0.19.0
+
+# 其他工具
+python-dateutil>=2.8.0

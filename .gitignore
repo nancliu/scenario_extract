@@ -1,27 +1,27 @@
-# IDE files
-.cursor/
-.vscode/
-.idea/
+# 忽略敏感配置文件
+.env
+config_local.py
 
-# OS files
-.DS_Store
-Thumbs.db
-*.tmp
-*.swp
-
-# Logs
+# 忽略分析输出
+od_analysis_output/
 *.log
 
-# Dependencies
-node_modules/
+# Python缓存
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+*.so
 
-# Build outputs
-build/
-dist/
-*.exe
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
 
-# Temporary files
-temp/
-tmp/ 
+# 临时文件
+*.tmp
+*.temp
+
+config/

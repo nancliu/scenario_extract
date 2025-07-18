@@ -1,0 +1,2003 @@
+{
+  "total_records": 254,
+  "unique_squares": 254,
+  "avg_balance_ratio": 238767717.8693472,
+  "balance_ratio_stats": {
+    "mean": 238767717.8693472,
+    "median": 0.9298141362470353,
+    "std": 524633081.39384985,
+    "min": 0.0,
+    "max": 3204000000.0,
+    "q25": 0.0,
+    "q75": 151250000.0
+  },
+  "imbalanced_squares": {
+    "count": 248,
+    "details": [
+      {
+        "square_code": "G00055100200104010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 181.0,
+        "offramp_flow": 0.0,
+        "total_flow": 181.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100200104020",
+        "flow_balance_ratio": 6.999999500000036,
+        "onramp_flow": 14.0,
+        "offramp_flow": 98.0,
+        "total_flow": 112.0,
+        "balance_deviation": 5.999999500000036
+      },
+      {
+        "square_code": "G00055100200204010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 147.0,
+        "offramp_flow": 0.0,
+        "total_flow": 147.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100200204020",
+        "flow_balance_ratio": 94000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 94.0,
+        "total_flow": 94.0,
+        "balance_deviation": 93999999.0
+      },
+      {
+        "square_code": "G00055100200301010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 205.0,
+        "offramp_flow": 0.0,
+        "total_flow": 205.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100200302010",
+        "flow_balance_ratio": 185000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 185.0,
+        "total_flow": 185.0,
+        "balance_deviation": 184999999.0
+      },
+      {
+        "square_code": "G00055100300104010",
+        "flow_balance_ratio": 0.39449540922481274,
+        "onramp_flow": 109.0,
+        "offramp_flow": 43.0,
+        "total_flow": 152.0,
+        "balance_deviation": 0.6055045907751873
+      },
+      {
+        "square_code": "G00055100300104020",
+        "flow_balance_ratio": 49000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 49.0,
+        "total_flow": 49.0,
+        "balance_deviation": 48999999.0
+      },
+      {
+        "square_code": "G00055100300204010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 9.0,
+        "offramp_flow": 0.0,
+        "total_flow": 9.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100300204020",
+        "flow_balance_ratio": 10000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 10.0,
+        "total_flow": 10.0,
+        "balance_deviation": 9999999.0
+      },
+      {
+        "square_code": "G00055100300304010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 64.0,
+        "offramp_flow": 0.0,
+        "total_flow": 64.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100300304020",
+        "flow_balance_ratio": 88000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 88.0,
+        "total_flow": 88.0,
+        "balance_deviation": 87999999.0
+      },
+      {
+        "square_code": "G00055100300404010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 67.0,
+        "offramp_flow": 0.0,
+        "total_flow": 67.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100300404020",
+        "flow_balance_ratio": 92000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 92.0,
+        "total_flow": 92.0,
+        "balance_deviation": 91999999.0
+      },
+      {
+        "square_code": "G00055100300504010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 79.0,
+        "offramp_flow": 0.0,
+        "total_flow": 79.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100300504020",
+        "flow_balance_ratio": 69000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 69.0,
+        "total_flow": 69.0,
+        "balance_deviation": 68999999.0
+      },
+      {
+        "square_code": "G00055100300604010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 38.0,
+        "offramp_flow": 0.0,
+        "total_flow": 38.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100300604020",
+        "flow_balance_ratio": 26000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 26.0,
+        "total_flow": 26.0,
+        "balance_deviation": 25999999.0
+      },
+      {
+        "square_code": "G00055100300704010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 106.0,
+        "offramp_flow": 0.0,
+        "total_flow": 106.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100300704020",
+        "flow_balance_ratio": 99000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 99.0,
+        "total_flow": 99.0,
+        "balance_deviation": 98999999.0
+      },
+      {
+        "square_code": "G00055100300804010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 33.0,
+        "offramp_flow": 0.0,
+        "total_flow": 33.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100300804020",
+        "flow_balance_ratio": 79000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 79.0,
+        "total_flow": 79.0,
+        "balance_deviation": 78999999.0
+      },
+      {
+        "square_code": "G00055100300904010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 83.0,
+        "offramp_flow": 0.0,
+        "total_flow": 83.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100300904020",
+        "flow_balance_ratio": 1.959999960800001,
+        "onramp_flow": 50.0,
+        "offramp_flow": 98.0,
+        "total_flow": 148.0,
+        "balance_deviation": 0.9599999608000009
+      },
+      {
+        "square_code": "G00055100301004010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 563.0,
+        "offramp_flow": 0.0,
+        "total_flow": 563.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100301004020",
+        "flow_balance_ratio": 22.279999108800034,
+        "onramp_flow": 25.0,
+        "offramp_flow": 557.0,
+        "total_flow": 582.0,
+        "balance_deviation": 21.279999108800034
+      },
+      {
+        "square_code": "G00055100301104010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 738.0,
+        "offramp_flow": 0.0,
+        "total_flow": 738.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100301104020",
+        "flow_balance_ratio": 762000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 762.0,
+        "total_flow": 762.0,
+        "balance_deviation": 761999999.0
+      },
+      {
+        "square_code": "G00055100500101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 2393.0,
+        "offramp_flow": 0.0,
+        "total_flow": 2393.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500102010",
+        "flow_balance_ratio": 274.9999725000028,
+        "onramp_flow": 10.0,
+        "offramp_flow": 2750.0,
+        "total_flow": 2760.0,
+        "balance_deviation": 273.9999725000028
+      },
+      {
+        "square_code": "G00055100500201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 967.0,
+        "offramp_flow": 0.0,
+        "total_flow": 967.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500202010",
+        "flow_balance_ratio": 744000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 744.0,
+        "total_flow": 744.0,
+        "balance_deviation": 743999999.0
+      },
+      {
+        "square_code": "G00055100500202020",
+        "flow_balance_ratio": 634000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 634.0,
+        "total_flow": 634.0,
+        "balance_deviation": 633999999.0
+      },
+      {
+        "square_code": "G00055100500301010",
+        "flow_balance_ratio": 0.1880032205362306,
+        "onramp_flow": 2484.0,
+        "offramp_flow": 467.0,
+        "total_flow": 2951.0,
+        "balance_deviation": 0.8119967794637695
+      },
+      {
+        "square_code": "G00055100500301020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 309.0,
+        "offramp_flow": 0.0,
+        "total_flow": 309.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500302010",
+        "flow_balance_ratio": 1757000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1757.0,
+        "total_flow": 1757.0,
+        "balance_deviation": 1756999999.0
+      },
+      {
+        "square_code": "G00055100500302020",
+        "flow_balance_ratio": 164000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 164.0,
+        "total_flow": 164.0,
+        "balance_deviation": 163999999.0
+      },
+      {
+        "square_code": "G00055100500401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 594.0,
+        "offramp_flow": 0.0,
+        "total_flow": 594.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500401020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 135.0,
+        "offramp_flow": 0.0,
+        "total_flow": 135.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500402010",
+        "flow_balance_ratio": 769000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 769.0,
+        "total_flow": 769.0,
+        "balance_deviation": 768999999.0
+      },
+      {
+        "square_code": "G00055100500402030",
+        "flow_balance_ratio": 92000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 92.0,
+        "total_flow": 92.0,
+        "balance_deviation": 91999999.0
+      },
+      {
+        "square_code": "G00055100500501010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 307.0,
+        "offramp_flow": 0.0,
+        "total_flow": 307.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500501020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 120.0,
+        "offramp_flow": 0.0,
+        "total_flow": 120.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500502020",
+        "flow_balance_ratio": 302000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 302.0,
+        "total_flow": 302.0,
+        "balance_deviation": 301999999.0
+      },
+      {
+        "square_code": "G00055100500601010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 24.0,
+        "offramp_flow": 0.0,
+        "total_flow": 24.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500602010",
+        "flow_balance_ratio": 14000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 14.0,
+        "total_flow": 14.0,
+        "balance_deviation": 13999999.0
+      },
+      {
+        "square_code": "G00055100500701010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 79.0,
+        "offramp_flow": 0.0,
+        "total_flow": 79.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500701020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 106.0,
+        "offramp_flow": 0.0,
+        "total_flow": 106.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500702010",
+        "flow_balance_ratio": 223000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 223.0,
+        "total_flow": 223.0,
+        "balance_deviation": 222999999.0
+      },
+      {
+        "square_code": "G00055100500702020",
+        "flow_balance_ratio": 111000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 111.0,
+        "total_flow": 111.0,
+        "balance_deviation": 110999999.0
+      },
+      {
+        "square_code": "G00055100500801010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 283.0,
+        "offramp_flow": 0.0,
+        "total_flow": 283.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500802010",
+        "flow_balance_ratio": 1.487288129291152,
+        "onramp_flow": 236.0,
+        "offramp_flow": 351.0,
+        "total_flow": 587.0,
+        "balance_deviation": 0.48728812929115195
+      },
+      {
+        "square_code": "G00055100500901010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 49.0,
+        "offramp_flow": 0.0,
+        "total_flow": 49.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100500902010",
+        "flow_balance_ratio": 35000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 35.0,
+        "total_flow": 35.0,
+        "balance_deviation": 34999999.0
+      },
+      {
+        "square_code": "G00055100501001010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 48.0,
+        "offramp_flow": 0.0,
+        "total_flow": 48.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100501001020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 14.0,
+        "offramp_flow": 0.0,
+        "total_flow": 14.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100501002010",
+        "flow_balance_ratio": 82000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 82.0,
+        "total_flow": 82.0,
+        "balance_deviation": 81999999.0
+      },
+      {
+        "square_code": "G00055100501101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 101.0,
+        "offramp_flow": 0.0,
+        "total_flow": 101.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100501102010",
+        "flow_balance_ratio": 117000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 117.0,
+        "total_flow": 117.0,
+        "balance_deviation": 116999999.0
+      },
+      {
+        "square_code": "G00055100501201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 264.0,
+        "offramp_flow": 0.0,
+        "total_flow": 264.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100501202010",
+        "flow_balance_ratio": 366000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 366.0,
+        "total_flow": 366.0,
+        "balance_deviation": 365999999.0
+      },
+      {
+        "square_code": "G00055100501301010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 300.0,
+        "offramp_flow": 0.0,
+        "total_flow": 300.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100501302010",
+        "flow_balance_ratio": 260000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 260.0,
+        "total_flow": 260.0,
+        "balance_deviation": 259999999.0
+      },
+      {
+        "square_code": "G00055100501401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 155.0,
+        "offramp_flow": 0.0,
+        "total_flow": 155.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100501402010",
+        "flow_balance_ratio": 126000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 126.0,
+        "total_flow": 126.0,
+        "balance_deviation": 125999999.0
+      },
+      {
+        "square_code": "G00055100501501010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 283.0,
+        "offramp_flow": 0.0,
+        "total_flow": 283.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100501502010",
+        "flow_balance_ratio": 272000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 272.0,
+        "total_flow": 272.0,
+        "balance_deviation": 271999999.0
+      },
+      {
+        "square_code": "G00055100600101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 81.0,
+        "offramp_flow": 0.0,
+        "total_flow": 81.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100600102010",
+        "flow_balance_ratio": 133000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 133.0,
+        "total_flow": 133.0,
+        "balance_deviation": 132999999.0
+      },
+      {
+        "square_code": "G00055100600201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 382.0,
+        "offramp_flow": 0.0,
+        "total_flow": 382.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100600202010",
+        "flow_balance_ratio": 303000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 303.0,
+        "total_flow": 303.0,
+        "balance_deviation": 302999999.0
+      },
+      {
+        "square_code": "G00055100600301010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 38.0,
+        "offramp_flow": 0.0,
+        "total_flow": 38.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100600302010",
+        "flow_balance_ratio": 96000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 96.0,
+        "total_flow": 96.0,
+        "balance_deviation": 95999999.0
+      },
+      {
+        "square_code": "G00055100600401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 202.0,
+        "offramp_flow": 0.0,
+        "total_flow": 202.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100600402010",
+        "flow_balance_ratio": 137000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 137.0,
+        "total_flow": 137.0,
+        "balance_deviation": 136999999.0
+      },
+      {
+        "square_code": "G00055100600501010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 146.0,
+        "offramp_flow": 0.0,
+        "total_flow": 146.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100600502010",
+        "flow_balance_ratio": 126000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 126.0,
+        "total_flow": 126.0,
+        "balance_deviation": 125999999.0
+      },
+      {
+        "square_code": "G00055100600601010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 106.0,
+        "offramp_flow": 0.0,
+        "total_flow": 106.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100600602010",
+        "flow_balance_ratio": 66000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 66.0,
+        "total_flow": 66.0,
+        "balance_deviation": 65999999.0
+      },
+      {
+        "square_code": "G00055100600701010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 176.0,
+        "offramp_flow": 0.0,
+        "total_flow": 176.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100600702010",
+        "flow_balance_ratio": 135000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 135.0,
+        "total_flow": 135.0,
+        "balance_deviation": 134999999.0
+      },
+      {
+        "square_code": "G00055100600801010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 34.0,
+        "offramp_flow": 0.0,
+        "total_flow": 34.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100600802010",
+        "flow_balance_ratio": 41000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 41.0,
+        "total_flow": 41.0,
+        "balance_deviation": 40999999.0
+      },
+      {
+        "square_code": "G00055100600901010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 20.0,
+        "offramp_flow": 0.0,
+        "total_flow": 20.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100600902010",
+        "flow_balance_ratio": 19000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 19.0,
+        "total_flow": 19.0,
+        "balance_deviation": 18999999.0
+      },
+      {
+        "square_code": "G00055100601001010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 183.0,
+        "offramp_flow": 0.0,
+        "total_flow": 183.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100601002010",
+        "flow_balance_ratio": 8.92592559533609,
+        "onramp_flow": 27.0,
+        "offramp_flow": 241.0,
+        "total_flow": 268.0,
+        "balance_deviation": 7.925925595336089
+      },
+      {
+        "square_code": "G00055100601201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 5.0,
+        "offramp_flow": 0.0,
+        "total_flow": 5.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100601202010",
+        "flow_balance_ratio": 22000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 22.0,
+        "total_flow": 22.0,
+        "balance_deviation": 21999999.0
+      },
+      {
+        "square_code": "G00055100601302010",
+        "flow_balance_ratio": 8000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 8.0,
+        "total_flow": 8.0,
+        "balance_deviation": 7999999.0
+      },
+      {
+        "square_code": "G00055100700101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 514.0,
+        "offramp_flow": 0.0,
+        "total_flow": 514.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100700102010",
+        "flow_balance_ratio": 489000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 489.0,
+        "total_flow": 489.0,
+        "balance_deviation": 488999999.0
+      },
+      {
+        "square_code": "G00055100700201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 213.0,
+        "offramp_flow": 0.0,
+        "total_flow": 213.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100700202010",
+        "flow_balance_ratio": 226000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 226.0,
+        "total_flow": 226.0,
+        "balance_deviation": 225999999.0
+      },
+      {
+        "square_code": "G00055100700301010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 363.0,
+        "offramp_flow": 0.0,
+        "total_flow": 363.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100700302010",
+        "flow_balance_ratio": 500000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 500.0,
+        "total_flow": 500.0,
+        "balance_deviation": 499999999.0
+      },
+      {
+        "square_code": "G00055100700401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 332.0,
+        "offramp_flow": 0.0,
+        "total_flow": 332.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100700402010",
+        "flow_balance_ratio": 402000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 402.0,
+        "total_flow": 402.0,
+        "balance_deviation": 401999999.0
+      },
+      {
+        "square_code": "G00055100700501010",
+        "flow_balance_ratio": 0.2404274263219702,
+        "onramp_flow": 1123.0,
+        "offramp_flow": 270.0,
+        "total_flow": 1393.0,
+        "balance_deviation": 0.7595725736780298
+      },
+      {
+        "square_code": "G00055100700502010",
+        "flow_balance_ratio": 440000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 440.0,
+        "total_flow": 440.0,
+        "balance_deviation": 439999999.0
+      },
+      {
+        "square_code": "G00055100700601010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 413.0,
+        "offramp_flow": 0.0,
+        "total_flow": 413.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100700602010",
+        "flow_balance_ratio": 785000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 785.0,
+        "total_flow": 785.0,
+        "balance_deviation": 784999999.0
+      },
+      {
+        "square_code": "G00055100700701010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 652.0,
+        "offramp_flow": 0.0,
+        "total_flow": 652.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100700702010",
+        "flow_balance_ratio": 357000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 357.0,
+        "total_flow": 357.0,
+        "balance_deviation": 356999999.0
+      },
+      {
+        "square_code": "G00055100800101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 102.0,
+        "offramp_flow": 0.0,
+        "total_flow": 102.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100800102010",
+        "flow_balance_ratio": 119000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 119.0,
+        "total_flow": 119.0,
+        "balance_deviation": 118999999.0
+      },
+      {
+        "square_code": "G00055100800201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 304.0,
+        "offramp_flow": 0.0,
+        "total_flow": 304.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100800202010",
+        "flow_balance_ratio": 232000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 232.0,
+        "total_flow": 232.0,
+        "balance_deviation": 231999999.0
+      },
+      {
+        "square_code": "G00055100800301010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 24.0,
+        "offramp_flow": 0.0,
+        "total_flow": 24.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055100800302010",
+        "flow_balance_ratio": 49000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 49.0,
+        "total_flow": 49.0,
+        "balance_deviation": 48999999.0
+      },
+      {
+        "square_code": "G00055104400101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 151.0,
+        "offramp_flow": 0.0,
+        "total_flow": 151.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400102010",
+        "flow_balance_ratio": 231000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 231.0,
+        "total_flow": 231.0,
+        "balance_deviation": 230999999.0
+      },
+      {
+        "square_code": "G00055104400201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 35.0,
+        "offramp_flow": 0.0,
+        "total_flow": 35.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400201020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 277.0,
+        "offramp_flow": 0.0,
+        "total_flow": 277.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400202010",
+        "flow_balance_ratio": 549000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 549.0,
+        "total_flow": 549.0,
+        "balance_deviation": 548999999.0
+      },
+      {
+        "square_code": "G00055104400202020",
+        "flow_balance_ratio": 127000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 127.0,
+        "total_flow": 127.0,
+        "balance_deviation": 126999999.0
+      },
+      {
+        "square_code": "G00055104400301010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 17.0,
+        "offramp_flow": 0.0,
+        "total_flow": 17.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400301020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 59.0,
+        "offramp_flow": 0.0,
+        "total_flow": 59.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400302010",
+        "flow_balance_ratio": 64000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 64.0,
+        "total_flow": 64.0,
+        "balance_deviation": 63999999.0
+      },
+      {
+        "square_code": "G00055104400302020",
+        "flow_balance_ratio": 40000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 40.0,
+        "total_flow": 40.0,
+        "balance_deviation": 39999999.0
+      },
+      {
+        "square_code": "G00055104400401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 346.0,
+        "offramp_flow": 0.0,
+        "total_flow": 346.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400402010",
+        "flow_balance_ratio": 347000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 347.0,
+        "total_flow": 347.0,
+        "balance_deviation": 346999999.0
+      },
+      {
+        "square_code": "G00055104400501010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1148.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1148.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400502010",
+        "flow_balance_ratio": 749000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 749.0,
+        "total_flow": 749.0,
+        "balance_deviation": 748999999.0
+      },
+      {
+        "square_code": "G00055104400601010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 773.0,
+        "offramp_flow": 0.0,
+        "total_flow": 773.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400602010",
+        "flow_balance_ratio": 996000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 996.0,
+        "total_flow": 996.0,
+        "balance_deviation": 995999999.0
+      },
+      {
+        "square_code": "G00055104400701010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 569.0,
+        "offramp_flow": 0.0,
+        "total_flow": 569.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400702010",
+        "flow_balance_ratio": 474000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 474.0,
+        "total_flow": 474.0,
+        "balance_deviation": 473999999.0
+      },
+      {
+        "square_code": "G00055104400801010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 747.0,
+        "offramp_flow": 0.0,
+        "total_flow": 747.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400802010",
+        "flow_balance_ratio": 873000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 873.0,
+        "total_flow": 873.0,
+        "balance_deviation": 872999999.0
+      },
+      {
+        "square_code": "G00055104400901010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1300.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1300.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104400902010",
+        "flow_balance_ratio": 892000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 892.0,
+        "total_flow": 892.0,
+        "balance_deviation": 891999999.0
+      },
+      {
+        "square_code": "G00055104401001010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 162.0,
+        "offramp_flow": 0.0,
+        "total_flow": 162.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104401001020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 517.0,
+        "offramp_flow": 0.0,
+        "total_flow": 517.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104401002010",
+        "flow_balance_ratio": 884000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 884.0,
+        "total_flow": 884.0,
+        "balance_deviation": 883999999.0
+      },
+      {
+        "square_code": "G00055104401002020",
+        "flow_balance_ratio": 348000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 348.0,
+        "total_flow": 348.0,
+        "balance_deviation": 347999999.0
+      },
+      {
+        "square_code": "G00055104401101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1157.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1157.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00055104401102010",
+        "flow_balance_ratio": 936000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 936.0,
+        "total_flow": 936.0,
+        "balance_deviation": 935999999.0
+      },
+      {
+        "square_code": "G00765100300101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 89.0,
+        "offramp_flow": 0.0,
+        "total_flow": 89.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00765100300102010",
+        "flow_balance_ratio": 141000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 141.0,
+        "total_flow": 141.0,
+        "balance_deviation": 140999999.0
+      },
+      {
+        "square_code": "G00765100300201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 148.0,
+        "offramp_flow": 0.0,
+        "total_flow": 148.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00765100300202010",
+        "flow_balance_ratio": 122000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 122.0,
+        "total_flow": 122.0,
+        "balance_deviation": 121999999.0
+      },
+      {
+        "square_code": "G00765100300301010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 79.0,
+        "offramp_flow": 0.0,
+        "total_flow": 79.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00765100300302010",
+        "flow_balance_ratio": 75000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 75.0,
+        "total_flow": 75.0,
+        "balance_deviation": 74999999.0
+      },
+      {
+        "square_code": "G00765100300401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 302.0,
+        "offramp_flow": 0.0,
+        "total_flow": 302.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00765100300402010",
+        "flow_balance_ratio": 433000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 433.0,
+        "total_flow": 433.0,
+        "balance_deviation": 432999999.0
+      },
+      {
+        "square_code": "G00765100300501010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 83.0,
+        "offramp_flow": 0.0,
+        "total_flow": 83.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G00765100300502010",
+        "flow_balance_ratio": 108000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 108.0,
+        "total_flow": 108.0,
+        "balance_deviation": 107999999.0
+      },
+      {
+        "square_code": "G00765100300601010",
+        "flow_balance_ratio": 0.6111110997942389,
+        "onramp_flow": 54.0,
+        "offramp_flow": 33.0,
+        "total_flow": 87.0,
+        "balance_deviation": 0.38888890020576106
+      },
+      {
+        "square_code": "G00765100300701010",
+        "flow_balance_ratio": 0.32142855994898,
+        "onramp_flow": 28.0,
+        "offramp_flow": 9.0,
+        "total_flow": 37.0,
+        "balance_deviation": 0.67857144005102
+      },
+      {
+        "square_code": "G00765100300702010",
+        "flow_balance_ratio": 13000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 13.0,
+        "total_flow": 13.0,
+        "balance_deviation": 12999999.0
+      },
+      {
+        "square_code": "G42015100100101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 907.0,
+        "offramp_flow": 0.0,
+        "total_flow": 907.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100101020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 2069.0,
+        "offramp_flow": 0.0,
+        "total_flow": 2069.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100102010",
+        "flow_balance_ratio": 1947000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1947.0,
+        "total_flow": 1947.0,
+        "balance_deviation": 1946999999.0
+      },
+      {
+        "square_code": "G42015100100102020",
+        "flow_balance_ratio": 651000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 651.0,
+        "total_flow": 651.0,
+        "balance_deviation": 650999999.0
+      },
+      {
+        "square_code": "G42015100100201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1365.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1365.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100202010",
+        "flow_balance_ratio": 1468000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1468.0,
+        "total_flow": 1468.0,
+        "balance_deviation": 1467999999.0
+      },
+      {
+        "square_code": "G42015100100301010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1454.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1454.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100301020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 2226.0,
+        "offramp_flow": 0.0,
+        "total_flow": 2226.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100302010",
+        "flow_balance_ratio": 478000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 478.0,
+        "total_flow": 478.0,
+        "balance_deviation": 477999999.0
+      },
+      {
+        "square_code": "G42015100100302020",
+        "flow_balance_ratio": 2650000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 2650.0,
+        "total_flow": 2650.0,
+        "balance_deviation": 2649999999.0
+      },
+      {
+        "square_code": "G42015100100401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1588.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1588.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100402010",
+        "flow_balance_ratio": 3204000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 3204.0,
+        "total_flow": 3204.0,
+        "balance_deviation": 3203999999.0
+      },
+      {
+        "square_code": "G42015100100501010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1158.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1158.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100501020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 2213.0,
+        "offramp_flow": 0.0,
+        "total_flow": 2213.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100502010",
+        "flow_balance_ratio": 2474000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 2474.0,
+        "total_flow": 2474.0,
+        "balance_deviation": 2473999999.0
+      },
+      {
+        "square_code": "G42015100100502020",
+        "flow_balance_ratio": 1272000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1272.0,
+        "total_flow": 1272.0,
+        "balance_deviation": 1271999999.0
+      },
+      {
+        "square_code": "G42015100100601010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1371.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1371.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100601020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 87.0,
+        "offramp_flow": 0.0,
+        "total_flow": 87.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100602010",
+        "flow_balance_ratio": 1279000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1279.0,
+        "total_flow": 1279.0,
+        "balance_deviation": 1278999999.0
+      },
+      {
+        "square_code": "G42015100100602020",
+        "flow_balance_ratio": 36000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 36.0,
+        "total_flow": 36.0,
+        "balance_deviation": 35999999.0
+      },
+      {
+        "square_code": "G42015100100701010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 5.0,
+        "offramp_flow": 0.0,
+        "total_flow": 5.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100701020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 822.0,
+        "offramp_flow": 0.0,
+        "total_flow": 822.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100702010",
+        "flow_balance_ratio": 1097000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1097.0,
+        "total_flow": 1097.0,
+        "balance_deviation": 1096999999.0
+      },
+      {
+        "square_code": "G42015100100702020",
+        "flow_balance_ratio": 10000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 10.0,
+        "total_flow": 10.0,
+        "balance_deviation": 9999999.0
+      },
+      {
+        "square_code": "G42015100100801010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 480.0,
+        "offramp_flow": 0.0,
+        "total_flow": 480.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100801020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1006.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1006.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100802010",
+        "flow_balance_ratio": 700000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 700.0,
+        "total_flow": 700.0,
+        "balance_deviation": 699999999.0
+      },
+      {
+        "square_code": "G42015100100802020",
+        "flow_balance_ratio": 1567000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1567.0,
+        "total_flow": 1567.0,
+        "balance_deviation": 1566999999.0
+      },
+      {
+        "square_code": "G42015100100901010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 947.0,
+        "offramp_flow": 0.0,
+        "total_flow": 947.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100100902010",
+        "flow_balance_ratio": 998000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 998.0,
+        "total_flow": 998.0,
+        "balance_deviation": 997999999.0
+      },
+      {
+        "square_code": "G42015100200101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 612.0,
+        "offramp_flow": 0.0,
+        "total_flow": 612.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200102010",
+        "flow_balance_ratio": 1356000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1356.0,
+        "total_flow": 1356.0,
+        "balance_deviation": 1355999999.0
+      },
+      {
+        "square_code": "G42015100200201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1624.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1624.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200201020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 348.0,
+        "offramp_flow": 0.0,
+        "total_flow": 348.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200202010",
+        "flow_balance_ratio": 1844000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1844.0,
+        "total_flow": 1844.0,
+        "balance_deviation": 1843999999.0
+      },
+      {
+        "square_code": "G42015100200202020",
+        "flow_balance_ratio": 333000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 333.0,
+        "total_flow": 333.0,
+        "balance_deviation": 332999999.0
+      },
+      {
+        "square_code": "G42015100200301010",
+        "flow_balance_ratio": 0.33238095206439905,
+        "onramp_flow": 1050.0,
+        "offramp_flow": 349.0,
+        "total_flow": 1399.0,
+        "balance_deviation": 0.667619047935601
+      },
+      {
+        "square_code": "G42015100200301020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 727.0,
+        "offramp_flow": 0.0,
+        "total_flow": 727.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200302010",
+        "flow_balance_ratio": 2547000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 2547.0,
+        "total_flow": 2547.0,
+        "balance_deviation": 2546999999.0
+      },
+      {
+        "square_code": "G42015100200401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 424.0,
+        "offramp_flow": 0.0,
+        "total_flow": 424.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200401020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1525.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1525.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200402010",
+        "flow_balance_ratio": 1001000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1001.0,
+        "total_flow": 1001.0,
+        "balance_deviation": 1000999999.0
+      },
+      {
+        "square_code": "G42015100200402020",
+        "flow_balance_ratio": 2273000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 2273.0,
+        "total_flow": 2273.0,
+        "balance_deviation": 2272999999.0
+      },
+      {
+        "square_code": "G42015100200501010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1280.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1280.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200501020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1314.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1314.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200502020",
+        "flow_balance_ratio": 2274000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 2274.0,
+        "total_flow": 2274.0,
+        "balance_deviation": 2273999999.0
+      },
+      {
+        "square_code": "G42015100200601010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1916.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1916.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200602010",
+        "flow_balance_ratio": 1935000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1935.0,
+        "total_flow": 1935.0,
+        "balance_deviation": 1934999999.0
+      },
+      {
+        "square_code": "G42015100200701010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 830.0,
+        "offramp_flow": 0.0,
+        "total_flow": 830.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200701020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 1913.0,
+        "offramp_flow": 0.0,
+        "total_flow": 1913.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200702010",
+        "flow_balance_ratio": 682000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 682.0,
+        "total_flow": 682.0,
+        "balance_deviation": 681999999.0
+      },
+      {
+        "square_code": "G42015100200702020",
+        "flow_balance_ratio": 1314000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1314.0,
+        "total_flow": 1314.0,
+        "balance_deviation": 1313999999.0
+      },
+      {
+        "square_code": "G42015100200801010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 342.0,
+        "offramp_flow": 0.0,
+        "total_flow": 342.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200801020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 827.0,
+        "offramp_flow": 0.0,
+        "total_flow": 827.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "G42015100200802010",
+        "flow_balance_ratio": 1212000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1212.0,
+        "total_flow": 1212.0,
+        "balance_deviation": 1211999999.0
+      },
+      {
+        "square_code": "G42015100200802020",
+        "flow_balance_ratio": 1025000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 1025.0,
+        "total_flow": 1025.0,
+        "balance_deviation": 1024999999.0
+      },
+      {
+        "square_code": "S00815100100101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 12.0,
+        "offramp_flow": 0.0,
+        "total_flow": 12.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S00815100100102010",
+        "flow_balance_ratio": 17000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 17.0,
+        "total_flow": 17.0,
+        "balance_deviation": 16999999.0
+      },
+      {
+        "square_code": "S00815100100201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 13.0,
+        "offramp_flow": 0.0,
+        "total_flow": 13.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S00815100100202010",
+        "flow_balance_ratio": 15000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 15.0,
+        "total_flow": 15.0,
+        "balance_deviation": 14999999.0
+      },
+      {
+        "square_code": "S00815100100301010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 41.0,
+        "offramp_flow": 0.0,
+        "total_flow": 41.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S00815100100302010",
+        "flow_balance_ratio": 70000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 70.0,
+        "total_flow": 70.0,
+        "balance_deviation": 69999999.0
+      },
+      {
+        "square_code": "S00815100100401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 104.0,
+        "offramp_flow": 0.0,
+        "total_flow": 104.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S00815100100402010",
+        "flow_balance_ratio": 55000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 55.0,
+        "total_flow": 55.0,
+        "balance_deviation": 54999999.0
+      },
+      {
+        "square_code": "S00815100100501010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 152.0,
+        "offramp_flow": 0.0,
+        "total_flow": 152.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S00815100100502010",
+        "flow_balance_ratio": 85000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 85.0,
+        "total_flow": 85.0,
+        "balance_deviation": 84999999.0
+      },
+      {
+        "square_code": "S42025100200101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 56.0,
+        "offramp_flow": 0.0,
+        "total_flow": 56.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100200102010",
+        "flow_balance_ratio": 60000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 60.0,
+        "total_flow": 60.0,
+        "balance_deviation": 59999999.0
+      },
+      {
+        "square_code": "S42025100200201010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 122.0,
+        "offramp_flow": 0.0,
+        "total_flow": 122.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100200201020",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 257.0,
+        "offramp_flow": 0.0,
+        "total_flow": 257.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100200202010",
+        "flow_balance_ratio": 146000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 146.0,
+        "total_flow": 146.0,
+        "balance_deviation": 145999999.0
+      },
+      {
+        "square_code": "S42025100200202020",
+        "flow_balance_ratio": 295000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 295.0,
+        "total_flow": 295.0,
+        "balance_deviation": 294999999.0
+      },
+      {
+        "square_code": "S42025100200301010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 62.0,
+        "offramp_flow": 0.0,
+        "total_flow": 62.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100200302010",
+        "flow_balance_ratio": 97000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 97.0,
+        "total_flow": 97.0,
+        "balance_deviation": 96999999.0
+      },
+      {
+        "square_code": "S42025100200401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 200.0,
+        "offramp_flow": 0.0,
+        "total_flow": 200.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100200401020",
+        "flow_balance_ratio": 2.482758577883473,
+        "onramp_flow": 58.0,
+        "offramp_flow": 144.0,
+        "total_flow": 202.0,
+        "balance_deviation": 1.482758577883473
+      },
+      {
+        "square_code": "S42025100200402020",
+        "flow_balance_ratio": 60000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 60.0,
+        "total_flow": 60.0,
+        "balance_deviation": 59999999.0
+      },
+      {
+        "square_code": "S42025100200501010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 362.0,
+        "offramp_flow": 0.0,
+        "total_flow": 362.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100200502010",
+        "flow_balance_ratio": 309000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 309.0,
+        "total_flow": 309.0,
+        "balance_deviation": 308999999.0
+      },
+      {
+        "square_code": "S42025100200601010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 448.0,
+        "offramp_flow": 0.0,
+        "total_flow": 448.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100200602010",
+        "flow_balance_ratio": 237000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 237.0,
+        "total_flow": 237.0,
+        "balance_deviation": 236999999.0
+      },
+      {
+        "square_code": "S42025100200701010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 154.0,
+        "offramp_flow": 0.0,
+        "total_flow": 154.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100200702010",
+        "flow_balance_ratio": 153000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 153.0,
+        "total_flow": 153.0,
+        "balance_deviation": 152999999.0
+      },
+      {
+        "square_code": "S42025100200801010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 362.0,
+        "offramp_flow": 0.0,
+        "total_flow": 362.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100200802010",
+        "flow_balance_ratio": 409000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 409.0,
+        "total_flow": 409.0,
+        "balance_deviation": 408999999.0
+      },
+      {
+        "square_code": "S42025100200901010",
+        "flow_balance_ratio": 0.61999999752,
+        "onramp_flow": 250.0,
+        "offramp_flow": 155.0,
+        "total_flow": 405.0,
+        "balance_deviation": 0.38000000248
+      },
+      {
+        "square_code": "S42025100200902010",
+        "flow_balance_ratio": 3.128205088099935,
+        "onramp_flow": 78.0,
+        "offramp_flow": 244.0,
+        "total_flow": 322.0,
+        "balance_deviation": 2.128205088099935
+      },
+      {
+        "square_code": "S42025100201001010",
+        "flow_balance_ratio": 0.12621359162032236,
+        "onramp_flow": 206.0,
+        "offramp_flow": 26.0,
+        "total_flow": 232.0,
+        "balance_deviation": 0.8737864083796776
+      },
+      {
+        "square_code": "S42025100201002020",
+        "flow_balance_ratio": 2.4545454226682413,
+        "onramp_flow": 77.0,
+        "offramp_flow": 189.0,
+        "total_flow": 266.0,
+        "balance_deviation": 1.4545454226682413
+      },
+      {
+        "square_code": "S42025100201101010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 259.0,
+        "offramp_flow": 0.0,
+        "total_flow": 259.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100201102010",
+        "flow_balance_ratio": 220000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 220.0,
+        "total_flow": 220.0,
+        "balance_deviation": 219999999.0
+      },
+      {
+        "square_code": "S42025100201201010",
+        "flow_balance_ratio": 0.2864583318413629,
+        "onramp_flow": 192.0,
+        "offramp_flow": 55.0,
+        "total_flow": 247.0,
+        "balance_deviation": 0.7135416681586371
+      },
+      {
+        "square_code": "S42025100201202010",
+        "flow_balance_ratio": 2.4237287724791736,
+        "onramp_flow": 59.0,
+        "offramp_flow": 143.0,
+        "total_flow": 202.0,
+        "balance_deviation": 1.4237287724791736
+      },
+      {
+        "square_code": "S42025100201301010",
+        "flow_balance_ratio": 0.23630136905376245,
+        "onramp_flow": 292.0,
+        "offramp_flow": 69.0,
+        "total_flow": 361.0,
+        "balance_deviation": 0.7636986309462376
+      },
+      {
+        "square_code": "S42025100201302010",
+        "flow_balance_ratio": 2.1568627239523264,
+        "onramp_flow": 102.0,
+        "offramp_flow": 220.0,
+        "total_flow": 322.0,
+        "balance_deviation": 1.1568627239523264
+      },
+      {
+        "square_code": "S42025100201401010",
+        "flow_balance_ratio": 0.0,
+        "onramp_flow": 98.0,
+        "offramp_flow": 0.0,
+        "total_flow": 98.0,
+        "balance_deviation": 1.0
+      },
+      {
+        "square_code": "S42025100201402010",
+        "flow_balance_ratio": 84000000.0,
+        "onramp_flow": 0.0,
+        "offramp_flow": 84.0,
+        "total_flow": 84.0,
+        "balance_deviation": 83999999.0
+      }
+    ]
+  }
+}

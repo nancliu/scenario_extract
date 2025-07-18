@@ -1,0 +1,286 @@
+
+        <!DOCTYPE html>
+        <html lang="zh-CN">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>高速公路OD与流量关联分析报告（增强版）</title>
+            <style>
+                body { font-family: 'Microsoft YaHei', Arial, sans-serif; margin: 20px; line-height: 1.6; }
+                .header { text-align: center; margin-bottom: 30px; }
+                .section { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+                .section h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+                .section h3 { color: #34495e; margin-top: 25px; }
+                .section h4 { color: #7f8c8d; margin-top: 20px; }
+                table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+                th { background-color: #f8f9fa; font-weight: bold; }
+                .highlight { background-color: #fff3cd; }
+                .success { color: #28a745; }
+                .warning { color: #ffc107; }
+                .danger { color: #dc3545; }
+                .info { color: #17a2b8; }
+                ul { margin: 10px 0; padding-left: 20px; }
+                .summary-box { background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>高速公路OD与流量关联分析报告（增强版）</h1>
+                <p>生成时间: 2025-07-18 12:24:50</p>
+            </div>
+        
+        <div class="section">
+            <h2>1. 门架关联分析</h2>
+        
+            <h3>1.1 门架起点分析</h3>
+            <div class="summary-box">
+                <p><strong>基本统计：</strong></p>
+                <ul>
+                    <li>关联记录数: 153</li>
+                    <li>涉及门架数: 153</li>
+                    <li>相关系数: 0.267</li>
+                    <li>平均OD/流量比: 0.072</li>
+                </ul>
+            </div>
+            
+            <h3>1.2 门架终点分析</h3>
+            <div class="summary-box">
+                <p><strong>基本统计：</strong></p>
+                <ul>
+                    <li>关联记录数: 110</li>
+                    <li>涉及门架数: 110</li>
+                    <li>相关系数: 0.260</li>
+                    <li>平均OD/流量比: 0.028</li>
+                </ul>
+            </div>
+            
+            <h3>1.3 门架途中流量分析</h3>
+            <div class="summary-box">
+                <p><strong>途中流量统计：</strong></p>
+                <ul>
+                    <li>涉及门架数: 227</li>
+                    <li>平均途中流量占比: 93.7%</li>
+                    <li>平均OD占比: 6.3%</li>
+                </ul>
+                <p><strong>门架功能分类：</strong></p>
+                <ul>
+                    <li>通道型门架: 201个</li>
+                    <li>混合型门架: 24个</li>
+                    <li>起止型门架: 2个</li>
+                </ul>
+            </div>
+            </div>
+        <div class="section">
+            <h2>2. 收费广场关联分析</h2>
+        
+            <h3>2.1 收费广场入口分析</h3>
+            <div class="summary-box">
+                <p><strong>基本统计：</strong></p>
+                <ul>
+                    <li>关联记录数: 142</li>
+                    <li>涉及收费广场数: 142</li>
+                    <li>相关系数: 0.953</li>
+                    <li>平均OD/流量比: 0.476</li>
+                    <li>中位数OD/流量比: 0.495</li>
+                </ul>
+                <p><strong>OD/流量比分布：</strong></p>
+                <ul>
+                    <li>最小值: 0.020</li>
+                    <li>25%分位数: 0.296</li>
+                    <li>75%分位数: 0.637</li>
+                    <li>最大值: 1.000</li>
+                    <li>标准差: 0.223</li>
+                </ul>
+            </div>
+            
+                <h4>车型结构对比</h4>
+                <table>
+                    <tr><th>车型</th><th>OD数据占比</th><th>流量数据占比</th><th>差异</th></tr>
+                </table>
+            <h3>2.2 收费广场出口分析</h3>
+            <div class="summary-box">
+                <p><strong>基本统计：</strong></p>
+                <ul>
+                    <li>关联记录数: 135</li>
+                    <li>涉及收费广场数: 135</li>
+                    <li>相关系数: 0.925</li>
+                    <li>平均OD/流量比: 0.311</li>
+                    <li>中位数OD/流量比: 0.293</li>
+                </ul>
+                <p><strong>OD/流量比分布：</strong></p>
+                <ul>
+                    <li>最小值: 0.018</li>
+                    <li>25%分位数: 0.210</li>
+                    <li>75%分位数: 0.390</li>
+                    <li>最大值: 0.794</li>
+                    <li>标准差: 0.160</li>
+                </ul>
+            </div>
+            
+                <h4>车型结构对比</h4>
+                <table>
+                    <tr><th>车型</th><th>OD数据占比</th><th>流量数据占比</th><th>差异</th></tr>
+                </table>
+            <h3>2.3 收费广场流量平衡分析</h3>
+            <div class="summary-box">
+                <p><strong>平衡统计：</strong></p>
+                <ul>
+                    <li>涉及收费广场数: 254</li>
+                    <li>平均进出流量比: 238767717.869</li>
+                    <li>中位数进出流量比: 0.930</li>
+                    <li>不平衡收费广场数: 248</li>
+                    <li>不平衡比例: 97.6%</li>
+                </ul>
+            </div>
+            </div>
+        <div class="section">
+            <h2>3. 关键发现与分析</h2>
+        
+        <h3>3.1 门架途中流量验证</h3>
+        <div class="summary-box">
+        
+            <p><strong>门架途中流量分析验证了理论假设：</strong></p>
+            <ul>
+                <li>平均途中流量占比高达 <span class="info">93.7%</span></li>
+                <li>平均OD相关流量占比仅为 <span class="info">6.3%</span></li>
+                <li>这说明门架主要承担<strong>通道功能</strong>，而非起止点功能</li>
+            </ul>
+            
+        </div>
+
+        <h3>3.2 收费广场一致性验证</h3>
+        <div class="summary-box">
+        
+            <p><strong>收费广场入口分析验证了高一致性假设：</strong></p>
+            <ul>
+                <li>入口流量与OD数据相关系数: <span class="success">0.953</span></li>
+                <li>这说明收费广场入口流量与以该广场为起点的OD数据高度一致</li>
+            </ul>
+            
+            <p><strong>收费广场出口分析结果：</strong></p>
+            <ul>
+                <li>出口流量与OD数据相关系数: <span class="success">0.925</span></li>
+                <li>这说明收费广场出口流量与以该广场为终点的OD数据也高度一致</li>
+            </ul>
+            
+        </div>
+
+        <h3>3.3 数据质量评估</h3>
+        <div class="summary-box">
+        
+            <p><strong>收费广场入口OD/流量比中位数为0.495的原因分析：</strong></p>
+            <ul>
+                <li>中位数约为50%，说明存在系统性差异</li>
+                <li>可能原因：OD数据采样不完整，或流量数据包含了部分非OD记录的车辆</li>
+                <li>建议：进一步分析中位数附近的具体案例，识别差异来源</li>
+            </ul>
+            
+            <h4>收费广场入口中位数案例分析</h4>
+            <p><strong>中位数OD/流量比: 0.495</strong></p>
+            <p>分析了21个中位数附近的案例，以下是代表性样本：</p>
+            <table>
+                <tr><th>收费广场</th><th>日期</th><th>小时</th><th>OD数量</th><th>流量总数</th><th>OD/流量比</th></tr>
+            
+                <tr>
+                    <td>G00055100300604010</td>
+                    <td>2025-07-07</td>
+                    <td>8</td>
+                    <td>19</td>
+                    <td>38</td>
+                    <td>0.500</td>
+                </tr>
+                
+                <tr>
+                    <td>G42015100200201020</td>
+                    <td>2025-07-07</td>
+                    <td>8</td>
+                    <td>189</td>
+                    <td>348</td>
+                    <td>0.543</td>
+                </tr>
+                
+                <tr>
+                    <td>G42015100100501010</td>
+                    <td>2025-07-07</td>
+                    <td>8</td>
+                    <td>589</td>
+                    <td>1158</td>
+                    <td>0.509</td>
+                </tr>
+                
+                <tr>
+                    <td>G00055100300904020</td>
+                    <td>2025-07-07</td>
+                    <td>8</td>
+                    <td>25</td>
+                    <td>50</td>
+                    <td>0.500</td>
+                </tr>
+                
+                <tr>
+                    <td>G00055100600801010</td>
+                    <td>2025-07-07</td>
+                    <td>8</td>
+                    <td>18</td>
+                    <td>34</td>
+                    <td>0.529</td>
+                </tr>
+                </table>
+            <h4>收费广场出口中位数案例分析</h4>
+            <p><strong>中位数OD/流量比: 0.293</strong></p>
+            <p>分析了26个中位数附近的案例，以下是代表性样本：</p>
+            <table>
+                <tr><th>收费广场</th><th>日期</th><th>小时</th><th>OD数量</th><th>流量总数</th><th>OD/流量比</th></tr>
+            
+                <tr>
+                    <td>G00055100501202010</td>
+                    <td>2025-07-07</td>
+                    <td>8</td>
+                    <td>113</td>
+                    <td>366</td>
+                    <td>0.309</td>
+                </tr>
+                
+                <tr>
+                    <td>G42015100100702020</td>
+                    <td>2025-07-07</td>
+                    <td>8</td>
+                    <td>3</td>
+                    <td>10</td>
+                    <td>0.300</td>
+                </tr>
+                
+                <tr>
+                    <td>G00055100200302010</td>
+                    <td>2025-07-07</td>
+                    <td>8</td>
+                    <td>56</td>
+                    <td>185</td>
+                    <td>0.303</td>
+                </tr>
+                
+                <tr>
+                    <td>S42025100201001010</td>
+                    <td>2025-07-07</td>
+                    <td>8</td>
+                    <td>8</td>
+                    <td>26</td>
+                    <td>0.308</td>
+                </tr>
+                
+                <tr>
+                    <td>G00055104401002020</td>
+                    <td>2025-07-07</td>
+                    <td>8</td>
+                    <td>101</td>
+                    <td>348</td>
+                    <td>0.290</td>
+                </tr>
+                </table>
+        </div>
+        </div>
+        
+        </body>
+        </html>
+        

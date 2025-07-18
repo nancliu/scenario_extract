@@ -1,0 +1,80 @@
+{
+  "total_records": 110,
+  "unique_locations": 110,
+  "date_range": {
+    "start": "2025-07-07",
+    "end": "2025-07-07"
+  },
+  "correlation_coefficient": 0.2595305591368049,
+  "od_flow_ratio_stats": {
+    "mean": 0.028475616704609977,
+    "median": 0.005263157894736842,
+    "std": 0.05582868778156132,
+    "min": 0.00020661157024793388,
+    "max": 0.2951730029901751,
+    "q25": 0.001177909264585876,
+    "q75": 0.02203450289504296
+  },
+  "vehicle_ratio_comparison": {
+    "od_truck_ratio_mean": 0.14522017246456817,
+    "flow_truck_ratio_mean": 0.14644396047379174,
+    "truck_ratio_diff_mean": -0.0012237880092235561,
+    "truck_ratio_diff_std": 0.23122536198191232,
+    "od_passenger_ratio_mean": 0.8537633069784724,
+    "flow_passenger_ratio_mean": 0.8513926974924224,
+    "passenger_ratio_diff_mean": 0.0023706094860499235,
+    "passenger_ratio_diff_std": 0.23153473929098176
+  },
+  "time_patterns": {
+    "hourly_pattern": {
+      "od_count": {
+        "8": 51.3273
+      },
+      "flow_total": {
+        "8": 2139.4
+      },
+      "od_flow_ratio": {
+        "8": 0.0285
+      },
+      "flow_truck_ratio": {
+        "8": 0.1464
+      },
+      "flow_passenger_ratio": {
+        "8": 0.8514
+      }
+    },
+    "weekend_pattern": {
+      "od_count": {
+        "false": 51.3273
+      },
+      "flow_total": {
+        "false": 2139.4
+      },
+      "od_flow_ratio": {
+        "false": 0.0285
+      },
+      "flow_truck_ratio": {
+        "false": 0.1464
+      },
+      "flow_passenger_ratio": {
+        "false": 0.8514
+      }
+    },
+    "peak_analysis": {
+      "peak_hours": [
+        8
+      ],
+      "off_peak_hours": [
+        8
+      ],
+      "peak_avg_od_flow_ratio": 0.028475616704609977,
+      "off_peak_avg_od_flow_ratio": 0.028475616704609977
+    }
+  },
+  "vehicle_structure_analysis": {
+    "overall_comparison": {
+      "flow_passenger_ratio": 0.8513926974924224,
+      "flow_truck_ratio": 0.14644396047379174
+    }
+  }
+}
