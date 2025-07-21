@@ -4,7 +4,7 @@
 运行详细起始点关联分析的脚本
 
 使用示例:
-python run_detailed_correlation.py --start-date 2025-07-07 --end-date 2025-07-14 --sample-size 100000
+python run_detailed_correlation.py --start-date 2025-07-07 --end-date 2025-07-14
 """
 
 import os
@@ -17,13 +17,12 @@ def main():
     os.environ['DB_HOST'] = '10.149.235.123'
     os.environ['DB_PORT'] = '5432'
     os.environ['DB_NAME'] = 'sdzg'
-    os.environ['DB_USER'] = 'ln'
-    os.environ['DB_PASSWORD'] = 'caneln'
+    os.environ['DB_USER'] = 'user' # 用户名 请修改为实际用户名
+    os.environ['DB_PASSWORD'] = 'password' # 密码 请修改为实际密码
     
     # 默认参数
     start_date = '2025-07-07'
-    end_date = '2025-07-14'
-    sample_size = 100000
+    end_date = '2025-07-8'
     output_dir = 'detailed_correlation_output'
     
     # 解析命令行参数
@@ -33,8 +32,6 @@ def main():
                 start_date = sys.argv[i + 1]
             elif arg == '--end-date' and i + 1 < len(sys.argv):
                 end_date = sys.argv[i + 1]
-            elif arg == '--sample-size' and i + 1 < len(sys.argv):
-                sample_size = int(sys.argv[i + 1])
             elif arg == '--output-dir' and i + 1 < len(sys.argv):
                 output_dir = sys.argv[i + 1]
     
@@ -44,7 +41,6 @@ def main():
     print(f"参数设置:")
     print(f"  开始日期: {start_date}")
     print(f"  结束日期: {end_date}")
-    print(f"  样本大小: {sample_size:,}")
     print(f"  输出目录: {output_dir}")
     print("=" * 80)
     
@@ -53,7 +49,6 @@ def main():
         'python', 'detailed_correlation_analysis.py',
         '--start-date', start_date,
         '--end-date', end_date,
-        '--sample-size', str(sample_size),
         '--output-dir', output_dir
     ]
     

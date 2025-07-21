@@ -1,11 +1,10 @@
 {
   "total_records": 254,
   "unique_squares": 254,
-  "avg_balance_ratio": 238767717.8693472,
   "balance_ratio_stats": {
     "mean": 238767717.8693472,
     "median": 0.9298141362470353,
-    "std": 524633081.39384985,
+    "std": 524633081.39384943,
     "min": 0.0,
     "max": 3204000000.0,
     "q25": 0.0,

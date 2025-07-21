@@ -27,8 +27,8 @@
   },
   "data_quality_assessment": {
     "total_od_records": 544,
-    "matched_records": "139",
-    "missing_flow_records": "405",
+    "matched_records": 139,
+    "missing_flow_records": 405,
     "match_rate": 0.2555147058823529,
     "common_squares_count": 139,
     "od_only_squares_count": 0,

@@ -1,80 +1,38 @@
 {
   "total_records": 142,
+  "total_od_records": 403,
   "unique_locations": 142,
   "date_range": {
     "start": "2025-07-07",
     "end": "2025-07-07"
   },
-  "correlation_coefficient": 0.952935889036537,
+  "correlation_coefficient": 0.9933910116987106,
   "od_flow_ratio_stats": {
-    "mean": 0.47583746827691603,
-    "median": 0.49472896858465276,
-    "std": 0.22253450973183084,
-    "min": 0.019736842105263157,
+    "mean": 0.8734968141448487,
+    "median": 0.9242599175419939,
+    "std": 0.1571773979048955,
+    "min": 0.14473684210526316,
     "max": 1.0,
-    "q25": 0.2957589285714286,
-    "q75": 0.6374256702868805
+    "q25": 0.8507284299858557,
+    "q75": 0.9604432449142164
   },
-  "vehicle_ratio_comparison": {
-    "od_truck_ratio_mean": 0.1475429862479414,
-    "flow_truck_ratio_mean": 0.14885336101379992,
-    "truck_ratio_diff_mean": -0.0013103747658585164,
-    "truck_ratio_diff_std": 0.07579181156892717,
-    "od_passenger_ratio_mean": 0.8500771401341304,
-    "flow_passenger_ratio_mean": 0.8487390770427046,
-    "passenger_ratio_diff_mean": 0.0013380630914258016,
-    "passenger_ratio_diff_std": 0.07619123415834197
+  "flow_od_ratio_stats": {
+    "mean": 1.2495674405193478,
+    "median": 1.081946978869997,
+    "std": 0.6721085067918137,
+    "min": 1.0,
+    "max": 6.909090909090909,
+    "q25": 1.041185949081534,
+    "q75": 1.1754635537383786
   },
-  "time_patterns": {
-    "hourly_pattern": {
-      "od_count": {
-        "8": 237.1197
-      },
-      "flow_total": {
-        "8": 448.831
-      },
-      "od_flow_ratio": {
-        "8": 0.4758
-      },
-      "flow_truck_ratio": {
-        "8": 0.1489
-      },
-      "flow_passenger_ratio": {
-        "8": 0.8487
-      }
-    },
-    "weekend_pattern": {
-      "od_count": {
-        "false": 237.1197
-      },
-      "flow_total": {
-        "false": 448.831
-      },
-      "od_flow_ratio": {
-        "false": 0.4758
-      },
-      "flow_truck_ratio": {
-        "false": 0.1489
-      },
-      "flow_passenger_ratio": {
-        "false": 0.8487
-      }
-    },
-    "peak_analysis": {
-      "peak_hours": [
-        8
-      ],
-      "off_peak_hours": [
-        8
-      ],
-      "peak_avg_od_flow_ratio": 0.47583746827691603,
-      "off_peak_avg_od_flow_ratio": 0.47583746827691603
-    }
-  },
-  "vehicle_structure_analysis": {
-    "overall_comparison": {
-      "flow_passenger_ratio": 0.8487390770427046,
-      "flow_truck_ratio": 0.14885336101379992
-    }
+  "data_quality_assessment": {
+    "total_od_records": 403,
+    "matched_records": 403,
+    "unmatched_od_records": 0,
+    "od_match_rate": 1.0,
+    "common_squares_count": 142,
+    "od_only_squares_count": 0,
+    "flow_only_squares_count": 0,
+    "data_filter_note": "使用left join保留所有OD记录，统计基于有效匹配数据"
   }
 }

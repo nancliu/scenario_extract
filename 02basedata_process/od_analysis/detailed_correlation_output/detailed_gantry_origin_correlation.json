@@ -27,8 +27,8 @@
   },
   "data_quality_assessment": {
     "total_od_records": 488,
-    "matched_records": "177",
-    "missing_flow_records": "311",
+    "matched_records": 177,
+    "missing_flow_records": 311,
     "match_rate": 0.36270491803278687,
     "common_stations_count": 188,
     "od_only_stations_count": 16,

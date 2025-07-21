@@ -1,212 +1,227 @@
 {
-  "analysis_type": "entry",
-  "median_ratio": 0.49472896858465276,
-  "total_cases": 142,
-  "median_range_cases": 21,
+  "median_ratio": 0.9242599175419939,
+  "case_count": 113,
   "sample_cases": [
     {
-      "square_code": "G00055100300604010",
+      "square_code": "G42015100200101010",
       "date": "2025-07-07",
       "hour": 8,
-      "od_count": 19,
-      "flow_total": 38,
-      "od_flow_ratio": 0.5,
+      "od_count": 602,
+      "flow_total": 612.0,
+      "od_flow_ratio": 0.9836601307189542,
       "od_vehicle_types": {
-        "k1": 17,
-        "h3": 1,
-        "h1": 1
+        "k1": 493,
+        "h1": 101,
+        "h3": 2,
+        "h2": 2,
+        "k3": 1,
+        "t1": 1,
+        "h4": 1,
+        "t2": 1
       },
       "flow_breakdown": {
-        "total_k": "30",
-        "total_h": "8",
-        "total_t": "0"
+        "total_k": "502",
+        "total_h": "108",
+        "total_t": "2"
       }
     },
     {
-      "square_code": "G42015100200201020",
+      "square_code": "G00055100300204010",
       "date": "2025-07-07",
       "hour": 8,
-      "od_count": 189,
-      "flow_total": 348,
-      "od_flow_ratio": 0.5431034482758621,
+      "od_count": 8,
+      "flow_total": 9.0,
+      "od_flow_ratio": 0.8888888888888888,
       "od_vehicle_types": {
-        "k1": 152,
-        "h1": 33,
-        "h4": 3,
-        "h3": 1
-      },
-      "flow_breakdown": {
-        "total_k": "283",
-        "total_h": "65",
-        "total_t": "0"
-      }
-    },
-    {
-      "square_code": "G42015100100501010",
-      "date": "2025-07-07",
-      "hour": 8,
-      "od_count": 589,
-      "flow_total": 1158,
-      "od_flow_ratio": 0.5086355785837651,
-      "od_vehicle_types": {
-        "k1": 576,
-        "h1": 10,
-        "k3": 2,
+        "h3": 4,
+        "k1": 3,
         "h2": 1
       },
       "flow_breakdown": {
-        "total_k": "1130",
-        "total_h": "26",
+        "total_k": "3",
+        "total_h": "6",
+        "total_t": "0"
+      }
+    },
+    {
+      "square_code": "G00055100601002010",
+      "date": "2025-07-07",
+      "hour": 8,
+      "od_count": 27,
+      "flow_total": 27.0,
+      "od_flow_ratio": 1.0,
+      "od_vehicle_types": {
+        "k1": 26,
+        "k4": 1
+      },
+      "flow_breakdown": {
+        "total_k": "27",
+        "total_h": "0",
+        "total_t": "0"
+      }
+    },
+    {
+      "square_code": "G42015100100301010",
+      "date": "2025-07-07",
+      "hour": 8,
+      "od_count": 1421,
+      "flow_total": 1454.0,
+      "od_flow_ratio": 0.9773039889958735,
+      "od_vehicle_types": {
+        "k1": 1378,
+        "h1": 31,
+        "t2": 4,
+        "k3": 3,
+        "h3": 1,
+        "t1": 1,
+        "k4": 1,
+        "h4": 1,
+        "h2": 1
+      },
+      "flow_breakdown": {
+        "total_k": "1412",
+        "total_h": "37",
+        "total_t": "5"
+      }
+    },
+    {
+      "square_code": "G00055100300804010",
+      "date": "2025-07-07",
+      "hour": 8,
+      "od_count": 31,
+      "flow_total": 33.0,
+      "od_flow_ratio": 0.9393939393939394,
+      "od_vehicle_types": {
+        "k1": 27,
+        "h1": 3,
+        "h4": 1
+      },
+      "flow_breakdown": {
+        "total_k": "29",
+        "total_h": "4",
+        "total_t": "0"
+      }
+    },
+    {
+      "square_code": "G00055100700401010",
+      "date": "2025-07-07",
+      "hour": 8,
+      "od_count": 307,
+      "flow_total": 332.0,
+      "od_flow_ratio": 0.9246987951807228,
+      "od_vehicle_types": {
+        "k1": 305,
+        "k3": 1,
+        "k2": 1
+      },
+      "flow_breakdown": {
+        "total_k": "331",
+        "total_h": "1",
+        "total_t": "0"
+      }
+    },
+    {
+      "square_code": "G42015100100301020",
+      "date": "2025-07-07",
+      "hour": 8,
+      "od_count": 2186,
+      "flow_total": 2226.0,
+      "od_flow_ratio": 0.9820305480682839,
+      "od_vehicle_types": {
+        "k1": 2119,
+        "h1": 60,
+        "t1": 2,
+        "h2": 2,
+        "k3": 1,
+        "h4": 1,
+        "h3": 1
+      },
+      "flow_breakdown": {
+        "total_k": "2159",
+        "total_h": "65",
         "total_t": "2"
+      }
+    },
+    {
+      "square_code": "G00765100300501010",
+      "date": "2025-07-07",
+      "hour": 8,
+      "od_count": 78,
+      "flow_total": 83.0,
+      "od_flow_ratio": 0.9397590361445783,
+      "od_vehicle_types": {
+        "k1": 54,
+        "h3": 8,
+        "h1": 7,
+        "k2": 3,
+        "h2": 2,
+        "t2": 1,
+        "h6": 1,
+        "k3": 1,
+        "t1": 1
+      },
+      "flow_breakdown": {
+        "total_k": "60",
+        "total_h": "21",
+        "total_t": "2"
+      }
+    },
+    {
+      "square_code": "G00055100700601010",
+      "date": "2025-07-07",
+      "hour": 8,
+      "od_count": 372,
+      "flow_total": 413.0,
+      "od_flow_ratio": 0.9007263922518159,
+      "od_vehicle_types": {
+        "k1": 301,
+        "h1": 34,
+        "h3": 19,
+        "k4": 8,
+        "h4": 5,
+        "h2": 4,
+        "k3": 1
+      },
+      "flow_breakdown": {
+        "total_k": "339",
+        "total_h": "74",
+        "total_t": "0"
       }
     },
     {
       "square_code": "G00055100300904020",
       "date": "2025-07-07",
       "hour": 8,
-      "od_count": 25,
-      "flow_total": 50,
-      "od_flow_ratio": 0.5,
+      "od_count": 49,
+      "flow_total": 50.0,
+      "od_flow_ratio": 0.98,
       "od_vehicle_types": {
-        "k1": 23,
-        "h2": 1,
-        "k4": 1
+        "k1": 42,
+        "h1": 3,
+        "h2": 2,
+        "k4": 1,
+        "k3": 1
       },
       "flow_breakdown": {
         "total_k": "44",
         "total_h": "6",
         "total_t": "0"
       }
-    },
-    {
-      "square_code": "G00055100600801010",
-      "date": "2025-07-07",
-      "hour": 8,
-      "od_count": 18,
-      "flow_total": 34,
-      "od_flow_ratio": 0.5294117647058824,
-      "od_vehicle_types": {
-        "h3": 10,
-        "k1": 4,
-        "h6": 3,
-        "h1": 1
-      },
-      "flow_breakdown": {
-        "total_k": "12",
-        "total_h": "21",
-        "total_t": "1"
-      }
-    },
-    {
-      "square_code": "G00055100501401010",
-      "date": "2025-07-07",
-      "hour": 8,
-      "od_count": 76,
-      "flow_total": 155,
-      "od_flow_ratio": 0.49032258064516127,
-      "od_vehicle_types": {
-        "k1": 69,
-        "h1": 5,
-        "h3": 1,
-        "h2": 1
-      },
-      "flow_breakdown": {
-        "total_k": "140",
-        "total_h": "14",
-        "total_t": "1"
-      }
-    },
-    {
-      "square_code": "G00765100300301010",
-      "date": "2025-07-07",
-      "hour": 8,
-      "od_count": 40,
-      "flow_total": 79,
-      "od_flow_ratio": 0.5063291139240507,
-      "od_vehicle_types": {
-        "k1": 30,
-        "h6": 3,
-        "t1": 2,
-        "k4": 2,
-        "k3": 1,
-        "h1": 1,
-        "h3": 1
-      },
-      "flow_breakdown": {
-        "total_k": "62",
-        "total_h": "15",
-        "total_t": "2"
-      }
-    },
-    {
-      "square_code": "G00055100500301020",
-      "date": "2025-07-07",
-      "hour": 8,
-      "od_count": 153,
-      "flow_total": 309,
-      "od_flow_ratio": 0.49514563106796117,
-      "od_vehicle_types": {
-        "k1": 145,
-        "h1": 6,
-        "h3": 1,
-        "h2": 1
-      },
-      "flow_breakdown": {
-        "total_k": "261",
-        "total_h": "47",
-        "total_t": "1"
-      }
-    },
-    {
-      "square_code": "G42015100200301010",
-      "date": "2025-07-07",
-      "hour": 8,
-      "od_count": 535,
-      "flow_total": 1050,
-      "od_flow_ratio": 0.5095238095238095,
-      "od_vehicle_types": {
-        "k1": 502,
-        "h1": 26,
-        "t1": 2,
-        "h4": 2,
-        "k3": 2,
-        "h2": 1
-      },
-      "flow_breakdown": {
-        "total_k": "1004",
-        "total_h": "43",
-        "total_t": "3"
-      }
-    },
-    {
-      "square_code": "G42015100200201010",
-      "date": "2025-07-07",
-      "hour": 8,
-      "od_count": 797,
-      "flow_total": 1624,
-      "od_flow_ratio": 0.4907635467980296,
-      "od_vehicle_types": {
-        "k1": 784,
-        "h1": 7,
-        "h4": 2,
-        "k3": 1,
-        "k4": 1,
-        "h3": 1,
-        "t2": 1
-      },
-      "flow_breakdown": {
-        "total_k": "1603",
-        "total_h": "19",
-        "total_t": "2"
-      }
     }
   ],
-  "ratio_distribution": {
-    "min": 0.019736842105263157,
-    "q25": 0.2957589285714286,
-    "median": 0.49472896858465276,
-    "q75": 0.6374256702868805,
-    "max": 1.0,
-    "std": 0.22253450973183084
+  "analysis_summary": {
+    "median_od_flow_ratio": 0.9242599175419939,
+    "case_range": "0.832 - 1.017",
+    "total_cases_in_range": 113,
+    "sampled_cases": 10
+  },
+  "business_interpretation": {
+    "expected_behavior": "收费广场入口流量应与OD起点数量高度一致（比值接近1.0）",
+    "actual_finding": "中位数OD/流量比为92.4%",
+    "quality_assessment": "normal",
+    "recommended_actions": [
+      "数据质量良好，符合业务预期",
+      "继续监控数据一致性"
+    ]
   }
 }

@@ -66,91 +66,149 @@ class DetailedCorrelationAnalyzer:
             logger.error(f"数据库连接失败: {e}")
             raise
     
-    def load_data(self, start_date: str, end_date: str, sample_size: int = None):
-        """加载数据用于详细分析"""
-        logger.info(f"加载数据: {start_date} 到 {end_date}")
+    def _get_year_from_date(self, date_str: str) -> int:
+        """从日期字符串中提取年份"""
+        from datetime import datetime
+        return datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S').year
 
-        # 加载OD数据 - 不使用sample_size限制，通过时间范围控制数据量
-        od_sql = f"""
+    def _is_2024_data(self, start_date: str) -> bool:
+        """判断是否为2024年数据"""
+        return self._get_year_from_date(start_date) == 2024
+
+    def _get_table_names(self, start_date: str) -> dict:
+        """根据年份获取对应的表名"""
+        if self._is_2024_data(start_date):
+            return {
+                'od_table': 'dwd.dwd_od_g4202',
+                'gantry_table': 'dwd.dwd_flow_gantry', 
+                'onramp_table': 'dwd.dwd_flow_onramp',
+                'offramp_table': 'dwd.dwd_flow_offramp'
+            }
+        else:
+            return {
+                'od_table': 'dwd.dwd_od_weekly',
+                'gantry_table': 'dwd.dwd_flow_gantry_weekly',
+                'onramp_table': 'dwd.dwd_flow_onramp_weekly', 
+                'offramp_table': 'dwd.dwd_flow_offramp_weekly'
+            }
+
+    def _build_od_sql(self, table_name: str, start_date: str, end_date: str, time_filter: str) -> str:
+        """构建OD数据查询SQL"""
+        return f"""
         SELECT
             pass_id,
-            vehicle_type,
             start_time,
-            start_square_code,
-            start_square_name,
             start_station_code,
-            start_station_name,
+            start_square_code,
             end_time,
-            end_square_code,
-            end_square_name,
             end_station_code,
-            end_station_name,
-            direction
-        FROM dwd.dwd_od_weekly
-        WHERE start_time >= '{start_date}'
-          AND start_time < '{end_date}'
-          AND (start_square_code != end_square_code OR (start_square_code IS NULL AND end_square_code IS NULL AND start_station_code != end_station_code))
+            end_square_code,
+            vehicle_type
+        FROM {table_name}
+        WHERE {time_filter} >= '{start_date}'
+          AND {time_filter} < '{end_date}'
         ORDER BY start_time
         """
+
+    def _build_gantry_flow_sql(self, table_name: str, start_date: str, end_date: str) -> str:
+        """构建门架流量数据查询SQL"""
+        if self._is_2024_data(start_date):
+            return f"""
+            SELECT
+                gantry_id as station_code,
+                start_time,
+                (k1+k2+k3+k4+h1+h2+h3+h4+h5+h6+t1+t2+t3+t4+t5+t6) as total,
+                (k1+k2+k3+k4) as total_k,
+                (h1+h2+h3+h4+h5+h6) as total_h,
+                (t1+t2+t3+t4+t5+t6) as total_t
+            FROM {table_name}
+            WHERE start_time >= '{start_date}'
+              AND start_time < '{end_date}'
+            """
+        else:
+            return f"""
+            SELECT
+                start_gantryid as station_code,
+                start_time,
+                total,
+                total_k,
+                total_h,
+                total_t
+            FROM {table_name}
+            WHERE start_time >= '{start_date}'
+              AND start_time < '{end_date}'
+            """
+
+    def _build_square_flow_sql(self, table_name: str, start_date: str, end_date: str) -> str:
+        """构建收费广场流量数据查询SQL"""
+        if self._is_2024_data(start_date):
+            return f"""
+            SELECT
+                square_code,
+                start_time,
+                total,
+                (k1+k2+k3+k4) as total_k,
+                (h1+h2+h3+h4+h5+h6) as total_h,
+                (t1+t2+t3+t4+t5+t6) as total_t
+            FROM {table_name}
+            WHERE start_time >= '{start_date}'
+              AND start_time < '{end_date}'
+            """
+        else:
+            return f"""
+            SELECT
+                square_code,
+                start_time,
+                total,
+                total_k,
+                total_h,
+                total_t
+            FROM {table_name}
+            WHERE start_time >= '{start_date}'
+              AND start_time < '{end_date}'
+            """
+
+    def load_data(self, start_date: str, end_date: str):
+        """加载分析数据 - 支持2024和2025年数据"""
+        logger.info(f"加载数据: {start_date} 到 {end_date}")
         
-        self.od_data = pd.read_sql(od_sql, self.engine)
-        logger.info(f"加载OD数据: {len(self.od_data)} 条记录")
+        # 获取对应年份的表名
+        tables = self._get_table_names(start_date)
+        year = self._get_year_from_date(start_date)
+        logger.info(f"检测到{year}年数据，使用表: {list(tables.values())}")
         
-        # 处理OD数据
+        # 加载OD数据 - 分别加载入口和出口分析需要的数据
+        od_sql_entry = self._build_od_sql(tables['od_table'], start_date, end_date, 'start_time')
+        od_sql_exit = self._build_od_sql(tables['od_table'], start_date, end_date, 'end_time')
+        
+        # 分别加载入口和出口数据
+        od_data_entry = pd.read_sql(od_sql_entry, self.engine)
+        od_data_exit = pd.read_sql(od_sql_exit, self.engine)
+        
+        # 合并去重（使用pass_id作为唯一标识）
+        self.od_data = pd.concat([od_data_entry, od_data_exit]).drop_duplicates(subset=['pass_id']).reset_index(drop=True)
+        
+        logger.info(f"入口分析OD数据: {len(od_data_entry):,} 条记录")
+        logger.info(f"出口分析OD数据: {len(od_data_exit):,} 条记录")
+        logger.info(f"合并后OD数据: {len(self.od_data):,} 条记录")
+
+        # 数据预处理
         self._process_od_data()
-        
+
         # 加载门架流量数据
-        gantry_sql = f"""
-        SELECT
-            start_gantryid,
-            start_time,
-            total,
-            total_k,
-            total_h,
-            total_t,
-            'all' as direction
-        FROM dwd.dwd_flow_gantry_weekly
-        WHERE start_time >= '{start_date}'
-          AND start_time < '{end_date}'
-        """
-        
+        gantry_sql = self._build_gantry_flow_sql(tables['gantry_table'], start_date, end_date)
         self.gantry_flow_data = pd.read_sql(gantry_sql, self.engine)
-        logger.info(f"加载门架流量数据: {len(self.gantry_flow_data)} 条记录")
-        
-        # 加载收费广场流量数据
-        onramp_sql = f"""
-        SELECT
-            square_code,
-            start_time,
-            total,
-            total_k,
-            total_h,
-            total_t,
-            '入口' as direction
-        FROM dwd.dwd_flow_onramp_weekly
-        WHERE start_time >= '{start_date}'
-          AND start_time < '{end_date}'
-        """
-        
+        logger.info(f"门架流量数据加载完成: {len(self.gantry_flow_data):,} 条记录")
+
+        # 加载收费广场入口流量数据
+        onramp_sql = self._build_square_flow_sql(tables['onramp_table'], start_date, end_date)
         self.onramp_flow_data = pd.read_sql(onramp_sql, self.engine)
-        logger.info(f"加载收费广场入口流量数据: {len(self.onramp_flow_data)} 条记录")
+        logger.info(f"收费广场入口流量数据加载完成: {len(self.onramp_flow_data):,} 条记录")
 
         # 加载收费广场出口流量数据
-        offramp_sql = f"""
-        SELECT
-            square_code,
-            start_time,
-            total,
-            total_k,
-            total_h,
-            total_t
-        FROM dwd.dwd_flow_offramp_weekly
-        WHERE start_time >= '{start_date}'
-          AND start_time < '{end_date}'
-        """
-
+        offramp_sql = self._build_square_flow_sql(tables['offramp_table'], start_date, end_date)
         self.offramp_flow_data = pd.read_sql(offramp_sql, self.engine)
-        logger.info(f"加载收费广场出口流量数据: {len(self.offramp_flow_data)} 条记录")
+        logger.info(f"收费广场出口流量数据加载完成: {len(self.offramp_flow_data):,} 条记录")
     
     def _process_od_data(self):
         """处理OD数据"""
@@ -203,6 +261,9 @@ class DetailedCorrelationAnalyzer:
             logger.warning("没有门架起点的OD数据")
             return {}
         
+        logger.info(f"门架起点OD数据总数: {len(gantry_od)}")
+        logger.info(f"门架流量数据总数: {len(self.gantry_flow_data)}")
+        
         # 处理门架流量数据
         gantry_flow = self.gantry_flow_data.copy()
         gantry_flow['flow_datetime'] = pd.to_datetime(gantry_flow['start_time'])
@@ -212,51 +273,119 @@ class DetailedCorrelationAnalyzer:
         # 按门架、日期、小时聚合OD数据
         od_aggregated = gantry_od.groupby(['start_station_code', 'start_date', 'start_hour']).agg({
             'pass_id': 'count',
-            'vehicle_class': lambda x: x.value_counts().to_dict(),
-            'direction': lambda x: x.value_counts().to_dict()
+            'vehicle_class': lambda x: x.value_counts().to_dict()
         }).reset_index()
-        od_aggregated.columns = ['gantry_code', 'date', 'hour', 'od_count', 'od_vehicle_dist', 'od_direction_dist']
+        od_aggregated.columns = ['station_code', 'od_date', 'od_hour', 'od_count', 'od_vehicle_dist']
         
         # 按门架、日期、小时聚合流量数据
-        flow_aggregated = gantry_flow.groupby(['start_gantryid', 'flow_date', 'flow_hour']).agg({
+        flow_aggregated = gantry_flow.groupby(['station_code', 'flow_date', 'flow_hour']).agg({
             'total': 'sum',
             'total_k': 'sum',
             'total_h': 'sum',
             'total_t': 'sum'
         }).reset_index()
-        flow_aggregated.columns = ['gantry_code', 'date', 'hour', 'flow_total', 'flow_k', 'flow_h', 'flow_t']
+        flow_aggregated.columns = ['station_code', 'flow_date', 'flow_hour', 'flow_total', 'flow_k', 'flow_h', 'flow_t']
+
+        # 数据质量诊断
+        od_stations = set(od_aggregated['station_code'].unique())
+        flow_stations = set(flow_aggregated['station_code'].unique())
+        common_stations = od_stations.intersection(flow_stations)
+        od_only_stations = od_stations - flow_stations
+        flow_only_stations = flow_stations - od_stations
         
-        # 关联数据
+        logger.info(f"OD数据涉及门架数: {len(od_stations)}")
+        logger.info(f"流量数据涉及门架数: {len(flow_stations)}")
+        logger.info(f"共同门架数: {len(common_stations)}")
+        
+        if od_only_stations:
+            logger.warning(f"仅OD有的门架数: {len(od_only_stations)}, 示例: {list(od_only_stations)[:3]}")
+        if flow_only_stations:
+            logger.warning(f"仅流量有的门架数: {len(flow_only_stations)}, 示例: {list(flow_only_stations)[:3]}")
+
+        # 使用left join保留所有OD数据
         correlation_data = pd.merge(
             od_aggregated,
             flow_aggregated,
-            on=['gantry_code', 'date', 'hour'],
-            how='inner'
+            left_on=['station_code', 'od_date', 'od_hour'],
+            right_on=['station_code', 'flow_date', 'flow_hour'],
+            how='left'
         )
         
-        if correlation_data.empty:
-            logger.warning("门架关联数据为空")
+        if len(correlation_data) == 0:
+            logger.warning("门架关联后没有数据")
             return {}
-        
-        # 计算详细统计
-        results = self._calculate_detailed_stats(correlation_data, 'gantry')
-        
 
+        # 数据质量评估
+        missing_flow_count = correlation_data['flow_total'].isnull().sum()
+        matched_records = len(correlation_data) - missing_flow_count
         
-        # 时间模式分析
-        results['time_patterns'] = self._analyze_time_patterns(correlation_data)
+        logger.info(f"门架关联结果统计:")
+        logger.info(f"  - 总记录数: {len(correlation_data)}")
+        logger.info(f"  - 有流量匹配的记录数: {matched_records}")
+        logger.info(f"  - 缺失流量的记录数: {missing_flow_count}")
+        logger.info(f"  - OD总数: {correlation_data['od_count'].sum()}")
         
-        # 车型结构分析
-        results['vehicle_structure_analysis'] = self._analyze_vehicle_structure(correlation_data)
+        if matched_records > 0:
+            matched_od_count = correlation_data[correlation_data['flow_total'].notna()]['od_count'].sum()
+            matched_flow_total = correlation_data['flow_total'].dropna().sum()
+            logger.info(f"  - 匹配部分OD总数: {matched_od_count}")
+            logger.info(f"  - 匹配部分流量总数: {matched_flow_total}")
+            if matched_flow_total > 0:
+                logger.info(f"  - 匹配部分OD/流量比: {matched_od_count / matched_flow_total:.3f}")
+
+        # 计算详细统计
+        stats = self._calculate_detailed_stats(correlation_data, 'gantry_origin')
         
-        logger.info("门架关联分析完成")
-        return results
+        # 添加数据质量评估到结果中
+        stats['data_quality_assessment'] = {
+            'total_od_records': len(correlation_data),
+            'matched_records': matched_records,
+            'missing_flow_records': missing_flow_count,
+            'match_rate': matched_records / len(correlation_data) if len(correlation_data) > 0 else 0,
+            'common_stations_count': len(common_stations),
+            'od_only_stations_count': len(od_only_stations),
+            'flow_only_stations_count': len(flow_only_stations)
+        }
+
+        # 导出数据
+        output_dir = os.path.join(os.path.dirname(__file__), 'detailed_correlation_output')
+        os.makedirs(output_dir, exist_ok=True)
+        
+        gantry_file = os.path.join(output_dir, 'detailed_gantry_origin_correlation.json')
+        self._save_json_results(stats, gantry_file)
+        logger.info(f"门架起点关联分析数据已导出: {gantry_file}")
+
+        return stats
     
     def _calculate_detailed_stats(self, correlation_data, analysis_type):
         """计算详细统计信息"""
-        # 基本统计
+        # 分离有效数据和所有数据进行不同的统计
+        valid_data = correlation_data[correlation_data['flow_total'].notna()].copy()
+        
+        if len(valid_data) == 0:
+            logger.warning(f"没有有效的匹配数据用于{analysis_type}统计")
+            return {}
+        
+        # 修正计算逻辑：对于收费广场，流量应该与OD数量高度一致
+        if 'toll_square' in analysis_type:
+            # 对于收费广场，计算流量/OD比（应该接近1.0）
+            valid_data['flow_od_ratio'] = valid_data['flow_total'] / valid_data['od_count']
+            valid_data['od_flow_ratio'] = valid_data['od_count'] / valid_data['flow_total']
+            
+            # 数据质量评估
+            valid_data['data_quality_flag'] = valid_data['od_flow_ratio'].apply(
+                lambda x: 'normal' if 0.8 <= x <= 1.2 else 'abnormal'
+            )
+        else:
+            # 对于门架，计算OD/流量比（预期较低，因为存在途中流量）
+            valid_data['od_flow_ratio'] = valid_data['od_count'] / valid_data['flow_total']
+            valid_data['flow_od_ratio'] = valid_data['flow_total'] / valid_data['od_count']
+        
+        # 用valid_data计算比值，correlation_data填充NaN为0用于其他统计
         correlation_data['od_flow_ratio'] = correlation_data['od_count'] / correlation_data['flow_total']
+        correlation_data['flow_od_ratio'] = correlation_data['flow_total'] / correlation_data['od_count']
         correlation_data['od_flow_ratio'] = correlation_data['od_flow_ratio'].fillna(0)
+        correlation_data['flow_od_ratio'] = correlation_data['flow_od_ratio'].fillna(0)
         
         # 车型占比计算
         correlation_data['flow_passenger_ratio'] = correlation_data['flow_k'] / correlation_data['flow_total']
@@ -290,35 +419,63 @@ class DetailedCorrelationAnalyzer:
         else:
             logger.warning("od_vehicle_dist列不存在，跳过车型占比计算")
         
-        # 统计结果
+        # 统计结果 - 使用valid_data计算关键指标
         stats = {
-            'total_records': len(correlation_data),
-            'unique_locations': correlation_data['gantry_code'].nunique() if 'gantry' in analysis_type else correlation_data['square_code'].nunique(),
+            'total_records': len(valid_data),  # 有效匹配记录数
+            'total_od_records': len(correlation_data),  # 总OD记录数
+            'unique_locations': valid_data['station_code'].nunique() if 'gantry' in analysis_type else valid_data['square_code'].nunique(),
             'date_range': {
-                'start': correlation_data['date'].min(),
-                'end': correlation_data['date'].max()
+                'start': valid_data['od_date'].min() if len(valid_data) > 0 else None,
+                'end': valid_data['od_date'].max() if len(valid_data) > 0 else None
             },
-            'correlation_coefficient': correlation_data['od_count'].corr(correlation_data['flow_total']),
+            'correlation_coefficient': valid_data['od_count'].corr(valid_data['flow_total']),
+            
+            # 基于有效匹配数据的比值统计
             'od_flow_ratio_stats': {
-                'mean': correlation_data['od_flow_ratio'].mean(),
-                'median': correlation_data['od_flow_ratio'].median(),
-                'std': correlation_data['od_flow_ratio'].std(),
-                'min': correlation_data['od_flow_ratio'].min(),
-                'max': correlation_data['od_flow_ratio'].max(),
-                'q25': correlation_data['od_flow_ratio'].quantile(0.25),
-                'q75': correlation_data['od_flow_ratio'].quantile(0.75)
+                'mean': valid_data['od_flow_ratio'].mean(),
+                'median': valid_data['od_flow_ratio'].median(),
+                'std': valid_data['od_flow_ratio'].std(),
+                'min': valid_data['od_flow_ratio'].min(),
+                'max': valid_data['od_flow_ratio'].max(),
+                'q25': valid_data['od_flow_ratio'].quantile(0.25),
+                'q75': valid_data['od_flow_ratio'].quantile(0.75)
             },
-            'vehicle_ratio_comparison': {
-                'od_truck_ratio_mean': correlation_data['truck_ratio'].mean(),
-                'flow_truck_ratio_mean': correlation_data['flow_truck_ratio'].mean(),
-                'truck_ratio_diff_mean': correlation_data['truck_ratio_diff'].mean(),
-                'truck_ratio_diff_std': correlation_data['truck_ratio_diff'].std(),
-                'od_passenger_ratio_mean': correlation_data['passenger_ratio'].mean(),
-                'flow_passenger_ratio_mean': correlation_data['flow_passenger_ratio'].mean(),
-                'passenger_ratio_diff_mean': correlation_data['passenger_ratio_diff'].mean(),
-                'passenger_ratio_diff_std': correlation_data['passenger_ratio_diff'].std()
+            
+            # 新增：流量/OD比统计（对收费广场更有意义）
+            'flow_od_ratio_stats': {
+                'mean': valid_data['flow_od_ratio'].mean(),
+                'median': valid_data['flow_od_ratio'].median(),
+                'std': valid_data['flow_od_ratio'].std(),
+                'min': valid_data['flow_od_ratio'].min(),
+                'max': valid_data['flow_od_ratio'].max(),
+                'q25': valid_data['flow_od_ratio'].quantile(0.25),
+                'q75': valid_data['flow_od_ratio'].quantile(0.75)
             }
         }
+        
+        # 收费广场特有的数据质量评估
+        if 'toll_square' in analysis_type:
+            quality_stats = valid_data['data_quality_flag'].value_counts().to_dict()
+            stats['data_quality_assessment'] = {
+                'normal_records': quality_stats.get('normal', 0),
+                'abnormal_records': quality_stats.get('abnormal', 0),
+                'normal_ratio': quality_stats.get('normal', 0) / len(valid_data) if len(valid_data) > 0 else 0,
+                'expected_consistency': '流量应与OD数量高度一致(比值接近1.0)',
+                'actual_consistency': f"平均流量/OD比: {stats['flow_od_ratio_stats']['mean']:.2f}"
+            }
+        
+        # 车型比例对比（如果数据存在）
+        if 'truck_ratio' in valid_data.columns:
+            stats['vehicle_ratio_comparison'] = {
+                'od_truck_ratio_mean': valid_data['truck_ratio'].mean(),
+                'flow_truck_ratio_mean': valid_data['flow_truck_ratio'].mean(),
+                'truck_ratio_diff_mean': valid_data['truck_ratio_diff'].mean(),
+                'truck_ratio_diff_std': valid_data['truck_ratio_diff'].std(),
+                'od_passenger_ratio_mean': valid_data['passenger_ratio'].mean(),
+                'flow_passenger_ratio_mean': valid_data['flow_passenger_ratio'].mean(),
+                'passenger_ratio_diff_mean': valid_data['passenger_ratio_diff'].mean(),
+                'passenger_ratio_diff_std': valid_data['passenger_ratio_diff'].std()
+            }
         
         return stats
 
@@ -342,11 +499,11 @@ class DetailedCorrelationAnalyzer:
                 base_agg[field] = 'mean'
 
         # 小时模式
-        hourly_pattern = correlation_data.groupby('hour').agg(base_agg).round(4)
+        hourly_pattern = correlation_data.groupby('od_hour').agg(base_agg).round(4)
         patterns['hourly_pattern'] = hourly_pattern.to_dict()
 
         # 工作日vs周末模式（如果有足够数据）
-        correlation_data['weekday'] = pd.to_datetime(correlation_data['date']).dt.dayofweek
+        correlation_data['weekday'] = pd.to_datetime(correlation_data['od_date']).dt.dayofweek
         correlation_data['is_weekend'] = correlation_data['weekday'].isin([5, 6])
 
         weekend_pattern = correlation_data.groupby('is_weekend').agg(base_agg).round(4)
@@ -359,8 +516,8 @@ class DetailedCorrelationAnalyzer:
         patterns['peak_analysis'] = {
             'peak_hours': peak_hours,
             'off_peak_hours': off_peak_hours,
-            'peak_avg_od_flow_ratio': correlation_data[correlation_data['hour'].isin(peak_hours)]['od_flow_ratio'].mean(),
-            'off_peak_avg_od_flow_ratio': correlation_data[correlation_data['hour'].isin(off_peak_hours)]['od_flow_ratio'].mean()
+            'peak_avg_od_flow_ratio': correlation_data[correlation_data['od_hour'].isin(peak_hours)]['od_flow_ratio'].mean(),
+            'off_peak_avg_od_flow_ratio': correlation_data[correlation_data['od_hour'].isin(off_peak_hours)]['od_flow_ratio'].mean()
         }
 
         return patterns
@@ -382,29 +539,29 @@ class DetailedCorrelationAnalyzer:
 
         od_aggregated = gantry_od.groupby(['end_point_code', 'end_date', 'end_hour']).agg({
             'pass_id': 'count',
-            'vehicle_class': lambda x: x.value_counts().to_dict(),
-            'direction': lambda x: x.value_counts().to_dict()
+            'vehicle_class': lambda x: x.value_counts().to_dict()
         }).reset_index()
-        od_aggregated.columns = ['gantry_code', 'date', 'hour', 'od_count', 'od_vehicle_dist', 'od_direction_dist']
+        od_aggregated.columns = ['station_code', 'od_date', 'od_hour', 'od_count', 'od_vehicle_dist']
 
         # 按门架、日期、小时聚合流量数据
         gantry_flow = self.gantry_flow_data.copy()
         gantry_flow['flow_date'] = pd.to_datetime(gantry_flow['start_time']).dt.date
         gantry_flow['flow_hour'] = pd.to_datetime(gantry_flow['start_time']).dt.hour
 
-        flow_aggregated = gantry_flow.groupby(['start_gantryid', 'flow_date', 'flow_hour']).agg({
+        flow_aggregated = gantry_flow.groupby(['station_code', 'flow_date', 'flow_hour']).agg({
             'total': 'sum',
             'total_k': 'sum',
             'total_h': 'sum',
             'total_t': 'sum'
         }).reset_index()
-        flow_aggregated.columns = ['gantry_code', 'date', 'hour', 'flow_total', 'flow_k', 'flow_h', 'flow_t']
+        flow_aggregated.columns = ['station_code', 'flow_date', 'flow_hour', 'flow_total', 'flow_k', 'flow_h', 'flow_t']
 
-        # 关联OD数据和流量数据
+        # 使用left join保留所有OD数据
         correlation_data = pd.merge(
             od_aggregated, flow_aggregated,
-            on=['gantry_code', 'date', 'hour'],
-            how='inner'
+            left_on=['station_code', 'od_date', 'od_hour'],
+            right_on=['station_code', 'flow_date', 'flow_hour'],
+            how='left'
         )
 
         if len(correlation_data) == 0:
@@ -413,12 +570,6 @@ class DetailedCorrelationAnalyzer:
 
         # 计算详细统计
         results = self._calculate_detailed_stats(correlation_data, 'gantry_destination')
-
-        # 时间模式分析
-        results['time_patterns'] = self._analyze_time_patterns(correlation_data)
-
-        # 车型结构分析
-        results['vehicle_structure_analysis'] = self._analyze_vehicle_structure(correlation_data)
 
         logger.info("门架终点关联分析完成")
         return results
@@ -525,7 +676,7 @@ class DetailedCorrelationAnalyzer:
         gantry_flow['flow_date'] = pd.to_datetime(gantry_flow['start_time']).dt.date
         gantry_flow['flow_hour'] = pd.to_datetime(gantry_flow['start_time']).dt.hour
 
-        flow_stats = gantry_flow.groupby(['start_gantryid', 'flow_date', 'flow_hour']).agg({
+        flow_stats = gantry_flow.groupby(['station_code', 'flow_date', 'flow_hour']).agg({
             'total': 'sum'
         }).reset_index()
         flow_stats.columns = ['gantry_code', 'date', 'hour', 'total_flow']
@@ -881,10 +1032,10 @@ class DetailedCorrelationAnalyzer:
                 <p><strong>平衡统计：</strong></p>
                 <ul>
                     <li>涉及收费广场数: {toll_square_balance.get('unique_squares', 0)}</li>
-                    <li>平均进出流量比: {toll_square_balance.get('avg_balance_ratio', 0):.3f}</li>
+    
                     <li>中位数进出流量比: {balance_stats.get('median', 0):.3f}</li>
                     <li>不平衡收费广场数: {imbalanced.get('count', 0)}</li>
-                    <li>不平衡比例: {imbalanced.get('count', 0) / toll_square_balance.get('unique_squares', 1):.1%}</li>
+                    <li>不平衡比例: {imbalanced.get('count', 0) / max(toll_square_balance.get('unique_squares', 1), 1):.1%}</li>
                 </ul>
             </div>
             """
@@ -1049,8 +1200,12 @@ class DetailedCorrelationAnalyzer:
             logger.warning("没有收费广场起点的OD数据")
             return {}
 
-        # 处理收费广场流量数据（只取入口流量）
-        onramp_flow = self.onramp_flow_data[self.onramp_flow_data['direction'] == '入口'].copy()
+        # 基础数据量统计
+        logger.info(f"收费广场起点OD数据总数: {len(toll_square_od)}")
+        logger.info(f"收费广场入口流量数据总数: {len(self.onramp_flow_data)}")
+        
+        # 处理收费广场流量数据（onramp表本身就是入口流量，无需筛选direction）
+        onramp_flow = self.onramp_flow_data.copy()
         onramp_flow['flow_datetime'] = pd.to_datetime(onramp_flow['start_time'])
         onramp_flow['flow_hour'] = onramp_flow['flow_datetime'].dt.hour
         onramp_flow['flow_date'] = onramp_flow['flow_datetime'].dt.date
@@ -1058,10 +1213,9 @@ class DetailedCorrelationAnalyzer:
         # 按收费广场、日期、小时聚合OD数据
         od_aggregated = toll_square_od.groupby(['start_square_code', 'start_date', 'start_hour']).agg({
             'pass_id': 'count',
-            'vehicle_class': lambda x: x.value_counts().to_dict(),
-            'direction': lambda x: x.value_counts().to_dict()
+            'vehicle_class': lambda x: x.value_counts().to_dict()
         }).reset_index()
-        od_aggregated.columns = ['square_code', 'date', 'hour', 'od_count', 'od_vehicle_dist', 'od_direction_dist']
+        od_aggregated.columns = ['square_code', 'od_date', 'od_hour', 'od_count', 'od_vehicle_dist']
 
         # 按收费广场、日期、小时聚合流量数据
         flow_aggregated = onramp_flow.groupby(['square_code', 'flow_date', 'flow_hour']).agg({
@@ -1070,33 +1224,86 @@ class DetailedCorrelationAnalyzer:
             'total_h': 'sum',
             'total_t': 'sum'
         }).reset_index()
-        flow_aggregated.columns = ['square_code', 'date', 'hour', 'flow_total', 'flow_k', 'flow_h', 'flow_t']
+        flow_aggregated.columns = ['square_code', 'flow_date', 'flow_hour', 'flow_total', 'flow_k', 'flow_h', 'flow_t']
 
-        # 关联数据
+        # 数据质量诊断
+        od_squares = set(od_aggregated['square_code'].unique())
+        flow_squares = set(flow_aggregated['square_code'].unique())
+        common_squares = od_squares.intersection(flow_squares)
+        od_only_squares = od_squares - flow_squares
+        flow_only_squares = flow_squares - od_squares
+        
+        logger.info(f"OD数据涉及收费广场数: {len(od_squares)}")
+        logger.info(f"流量数据涉及收费广场数: {len(flow_squares)}")
+        logger.info(f"共同收费广场数: {len(common_squares)}")
+        
+        if od_only_squares:
+            logger.warning(f"仅OD有的收费广场数: {len(od_only_squares)}, 示例: {list(od_only_squares)[:3]}")
+        if flow_only_squares:
+            logger.warning(f"仅流量有的收费广场数: {len(flow_only_squares)}, 示例: {list(flow_only_squares)[:3]}")
+
+        # 使用left join保留所有OD数据，但在统计时区分有效数据
         correlation_data = pd.merge(
-            od_aggregated,
-            flow_aggregated,
-            on=['square_code', 'date', 'hour'],
-            how='inner'
+            od_aggregated, flow_aggregated,
+            left_on=['square_code', 'od_date', 'od_hour'],
+            right_on=['square_code', 'flow_date', 'flow_hour'],
+            how='left'  # 改回left join，保留所有OD记录
         )
-
-        if correlation_data.empty:
-            logger.warning("收费广场关联数据为空")
+        
+        if len(correlation_data) == 0:
+            logger.warning("关联后没有数据")
             return {}
 
+        # 数据质量评估 - 由于使用inner join，所有记录都有匹配的流量数据
+        missing_flow_count = 0  # inner join没有缺失流量记录
+        matched_records = len(correlation_data)
+        unmatched_od_count = len(od_aggregated) - matched_records  # 未匹配的OD记录数
+        
+        logger.info(f"数据关联结果统计:")
+        logger.info(f"  - 有效关联记录数: {matched_records}")
+        logger.info(f"  - 未匹配的OD记录数: {unmatched_od_count}")
+        logger.info(f"  - OD记录匹配率: {matched_records/len(od_aggregated)*100:.1f}%")
+        logger.info(f"  - OD总数: {correlation_data['od_count'].sum()}")
+        
+        if matched_records > 0:
+            matched_od_count = correlation_data['od_count'].sum()
+            matched_flow_total = correlation_data['flow_total'].sum()
+            logger.info(f"  - 匹配部分OD总数: {matched_od_count}")
+            logger.info(f"  - 匹配部分流量总数: {matched_flow_total}")
+            if matched_flow_total > 0:
+                logger.info(f"  - 匹配部分OD/流量比: {matched_od_count / matched_flow_total:.3f}")
+        
+        # 分析未匹配的原因
+        if unmatched_od_count > 0:
+            unmatched_squares = set(od_aggregated['square_code'].unique()) - set(correlation_data['square_code'].unique())
+            logger.warning(f"未匹配原因分析:")
+            logger.warning(f"  - 涉及{len(unmatched_squares)}个收费广场缺失流量数据")
+            logger.warning(f"  - 未匹配收费广场示例: {list(unmatched_squares)[:5]}")
+
         # 计算详细统计
-        results = self._calculate_detailed_stats(correlation_data, 'toll_square')
+        stats = self._calculate_detailed_stats(correlation_data, 'toll_square_entry')
+        
+        # 添加数据质量评估到结果中
+        stats['data_quality_assessment'] = {
+            'total_od_records': len(od_aggregated),
+            'matched_records': matched_records,
+            'unmatched_od_records': unmatched_od_count,
+            'od_match_rate': matched_records / len(od_aggregated) if len(od_aggregated) > 0 else 0,
+            'common_squares_count': len(common_squares),
+            'od_only_squares_count': len(od_only_squares),
+            'flow_only_squares_count': len(flow_only_squares),
+            'data_filter_note': '使用left join保留所有OD记录，统计基于有效匹配数据'
+        }
 
+        # 导出数据
+        output_dir = os.path.join(os.path.dirname(__file__), 'detailed_correlation_output')
+        os.makedirs(output_dir, exist_ok=True)
+        
+        toll_square_file = os.path.join(output_dir, 'detailed_toll_square_correlation.json')
+        self._save_json_results(stats, toll_square_file)
+        logger.info(f"收费广场关联分析数据已导出: {toll_square_file}")
 
-
-        # 时间模式分析
-        results['time_patterns'] = self._analyze_time_patterns(correlation_data)
-
-        # 车型结构分析
-        results['vehicle_structure_analysis'] = self._analyze_vehicle_structure(correlation_data)
-
-        logger.info("收费广场关联分析完成")
-        return results
+        return stats
 
     def analyze_toll_square_exit_correlation(self):
         """收费广场出口关联分析"""
@@ -1109,16 +1316,59 @@ class DetailedCorrelationAnalyzer:
             logger.warning("没有收费广场终点的OD数据")
             return {}
 
-        # 按收费广场、日期、小时聚合OD数据
-        toll_square_od['end_date'] = toll_square_od['end_datetime'].dt.date
-        toll_square_od['end_hour'] = toll_square_od['end_datetime'].dt.hour
+        logger.info(f"过滤后用于分析的OD数据: {len(toll_square_od)} 条")
+        logger.info(f"收费广场出口流量数据总数: {len(self.offramp_flow_data)}")
 
+        # 检查end_time和start_time的时差分布
+        toll_square_od['time_diff'] = (toll_square_od['end_datetime'] - toll_square_od['start_datetime']).dt.total_seconds() / 3600
+        time_diff_stats = toll_square_od['time_diff'].describe()
+        logger.info(f"行程时间统计(小时): 平均{time_diff_stats['mean']:.2f}, 中位数{time_diff_stats['50%']:.2f}, 最大{time_diff_stats['max']:.2f}")
+
+        # 按收费广场、日期、小时聚合OD数据
+        logger.info(f"开始聚合OD数据，聚合前记录数: {len(toll_square_od)}")
+        
+        # 检查聚合前数据的分布
+        square_counts = toll_square_od['end_square_code'].value_counts()
+        logger.info(f"聚合前收费广场分布: 总共{len(square_counts)}个收费广场")
+        if 'G42015100200802020' in square_counts.index:
+            logger.info(f"测试收费广场G42015100200802020在聚合前有 {square_counts['G42015100200802020']} 条记录")
+        
+        # 检查时间字段的情况
+        time_check = toll_square_od[['end_square_code', 'end_date', 'end_hour']].copy()
+        time_check_counts = time_check.groupby(['end_square_code', 'end_date', 'end_hour']).size()
+        logger.info(f"时空组合统计: {len(time_check_counts)} 个唯一组合")
+        
+        # 执行聚合
         od_aggregated = toll_square_od.groupby(['end_square_code', 'end_date', 'end_hour']).agg({
             'pass_id': 'count',
-            'vehicle_class': lambda x: x.value_counts().to_dict(),
-            'direction': lambda x: x.value_counts().to_dict()
+            'vehicle_class': lambda x: x.value_counts().to_dict()
         }).reset_index()
-        od_aggregated.columns = ['square_code', 'date', 'hour', 'od_count', 'od_vehicle_dist', 'od_direction_dist']
+        od_aggregated.columns = ['square_code', 'od_date', 'od_hour', 'od_count', 'od_vehicle_dist']
+
+        logger.info(f"OD数据聚合结果: {len(od_aggregated)} 个时空组合")
+        logger.info(f"聚合后总OD数量: {od_aggregated['od_count'].sum()}")
+        
+        # 检查特定收费广场的聚合结果
+        test_square_data = od_aggregated[od_aggregated['square_code'] == 'G42015100200802020']
+        if len(test_square_data) > 0:
+            logger.info(f"测试收费广场G42015100200802020聚合结果:")
+            for _, row in test_square_data.iterrows():
+                logger.info(f"  {row['square_code']} {row['od_date']} {row['od_hour']}时: {row['od_count']} 条OD")
+        else:
+            logger.warning(f"测试收费广场G42015100200802020在聚合结果中不存在!")
+        
+        # 验证聚合正确性 - 随机检查几个收费广场
+        sample_squares = od_aggregated['square_code'].unique()[:3]
+        for square in sample_squares:
+            square_data = od_aggregated[od_aggregated['square_code'] == square]
+            total_od_for_square = square_data['od_count'].sum()
+            
+            # 在原始数据中验证
+            original_count = len(toll_square_od[toll_square_od['end_square_code'] == square])
+            logger.info(f"验证收费广场 {square}: 聚合后总数={total_od_for_square}, 原始记录数={original_count}")
+            
+            if total_od_for_square != original_count:
+                logger.warning(f"数据聚合异常! 收费广场 {square} 聚合前后数量不一致")
 
         # 处理收费广场出口流量数据
         offramp_flow = self.offramp_flow_data.copy()
@@ -1133,30 +1383,92 @@ class DetailedCorrelationAnalyzer:
             'total_h': 'sum',
             'total_t': 'sum'
         }).reset_index()
-        flow_aggregated.columns = ['square_code', 'date', 'hour', 'flow_total', 'flow_k', 'flow_h', 'flow_t']
+        flow_aggregated.columns = ['square_code', 'flow_date', 'flow_hour', 'flow_total', 'flow_k', 'flow_h', 'flow_t']
 
-        # 关联OD数据和流量数据
+        logger.info(f"流量数据聚合结果: {len(flow_aggregated)} 个时空组合")
+
+        # 数据质量诊断
+        od_squares = set(od_aggregated['square_code'].unique())
+        flow_squares = set(flow_aggregated['square_code'].unique())
+        common_squares = od_squares.intersection(flow_squares)
+        od_only_squares = od_squares - flow_squares
+        flow_only_squares = flow_squares - od_squares
+        
+        logger.info(f"收费广场代码匹配情况:")
+        logger.info(f"  - OD数据涉及收费广场数: {len(od_squares)}")
+        logger.info(f"  - 流量数据涉及收费广场数: {len(flow_squares)}")
+        logger.info(f"  - 共同收费广场数: {len(common_squares)}")
+        logger.info(f"  - 收费广场重叠率: {len(common_squares)/max(len(od_squares), 1)*100:.1f}%")
+        
+        if od_only_squares:
+            logger.warning(f"仅OD有的收费广场数: {len(od_only_squares)}, 示例: {list(od_only_squares)[:3]}")
+        if flow_only_squares:
+            logger.warning(f"仅流量有的收费广场数: {len(flow_only_squares)}, 示例: {list(flow_only_squares)[:3]}")
+
+        # 使用left join保留所有OD数据
         correlation_data = pd.merge(
             od_aggregated, flow_aggregated,
-            on=['square_code', 'date', 'hour'],
-            how='inner'
+            left_on=['square_code', 'od_date', 'od_hour'],
+            right_on=['square_code', 'flow_date', 'flow_hour'],
+            how='left'
         )
 
         if len(correlation_data) == 0:
             logger.warning("收费广场出口关联数据为空")
             return {}
 
+        # 数据质量评估
+        missing_flow_count = correlation_data['flow_total'].isnull().sum()
+        matched_records = len(correlation_data) - missing_flow_count
+        
+        logger.info(f"数据关联结果统计:")
+        logger.info(f"  - 总记录数: {len(correlation_data)}")
+        logger.info(f"  - 有流量匹配的记录数: {matched_records}")
+        logger.info(f"  - 缺失流量的记录数: {missing_flow_count}")
+        logger.info(f"  - 数据匹配率: {matched_records/len(correlation_data)*100:.1f}%")
+        logger.info(f"  - OD总数: {correlation_data['od_count'].sum()}")
+        
+        if matched_records > 0:
+            matched_od_count = correlation_data[correlation_data['flow_total'].notna()]['od_count'].sum()
+            matched_flow_total = correlation_data['flow_total'].dropna().sum()
+            logger.info(f"  - 匹配部分OD总数: {matched_od_count}")
+            logger.info(f"  - 匹配部分流量总数: {matched_flow_total}")
+            if matched_flow_total > 0:
+                logger.info(f"  - 匹配部分OD/流量比: {matched_od_count / matched_flow_total:.3f}")
+        
+        # 分析未匹配的原因
+        if missing_flow_count > 0:
+            unmatched_data = correlation_data[correlation_data['flow_total'].isnull()]
+            unmatched_squares = unmatched_data['square_code'].unique()
+            logger.warning(f"未匹配流量的主要原因分析:")
+            logger.warning(f"  - 涉及{len(unmatched_squares)}个收费广场缺失流量数据")
+            logger.warning(f"  - 未匹配收费广场示例: {list(unmatched_squares)[:5]}")
+
         # 计算详细统计
-        results = self._calculate_detailed_stats(correlation_data, 'toll_square_exit')
+        stats = self._calculate_detailed_stats(correlation_data, 'toll_square_exit')
+        
+        # 添加数据质量评估到结果中
+        stats['data_quality_assessment'] = {
+            'total_od_records': len(correlation_data),
+            'matched_records': matched_records,
+            'missing_flow_records': missing_flow_count,
+            'match_rate': matched_records / len(correlation_data) if len(correlation_data) > 0 else 0,
+            'common_squares_count': len(common_squares),
+            'od_only_squares_count': len(od_only_squares),
+            'flow_only_squares_count': len(flow_only_squares),
+            'data_filter_note': '使用left join保留所有OD记录'
+        }
 
-        # 时间模式分析
-        results['time_patterns'] = self._analyze_time_patterns(correlation_data)
-
-        # 车型结构分析
-        results['vehicle_structure_analysis'] = self._analyze_vehicle_structure(correlation_data)
+        # 导出数据
+        output_dir = os.path.join(os.path.dirname(__file__), 'detailed_correlation_output')
+        os.makedirs(output_dir, exist_ok=True)
+        
+        toll_square_exit_file = os.path.join(output_dir, 'detailed_toll_square_exit_correlation.json')
+        self._save_json_results(stats, toll_square_exit_file)
+        logger.info(f"收费广场出口关联分析数据已导出: {toll_square_exit_file}")
 
         logger.info("收费广场出口关联分析完成")
-        return results
+        return stats
 
     def analyze_median_ratio_cases(self, analysis_type='entry'):
         """分析中位数OD/流量比的具体案例"""
@@ -1199,30 +1511,33 @@ class DetailedCorrelationAnalyzer:
         }).reset_index()
         flow_aggregated.columns = ['square_code', 'date', 'hour', 'flow_total']
 
-        # 关联数据
+        # 关联数据 - 使用left join保留所有OD数据
         correlation_data = pd.merge(
             od_aggregated, flow_aggregated,
             on=['square_code', 'date', 'hour'],
-            how='inner'
+            how='left'
         )
+        
+        # 过滤出有流量匹配的记录用于中位数分析
+        correlation_data_valid = correlation_data[correlation_data['flow_total'].notna()].copy()
 
-        if len(correlation_data) == 0:
-            logger.warning(f"收费广场{analysis_type}关联数据为空")
+        if len(correlation_data_valid) == 0:
+            logger.warning(f"收费广场{analysis_type}没有有效的关联数据")
             return {}
 
         # 计算OD/流量比
-        correlation_data['od_flow_ratio'] = correlation_data['od_count'] / correlation_data['flow_total']
+        correlation_data_valid['od_flow_ratio'] = correlation_data_valid['od_count'] / correlation_data_valid['flow_total']
 
         # 找到中位数附近的案例
-        median_ratio = correlation_data['od_flow_ratio'].median()
+        median_ratio = correlation_data_valid['od_flow_ratio'].median()
 
         # 选择中位数附近的案例（±10%范围内）
         lower_bound = median_ratio * 0.9
         upper_bound = median_ratio * 1.1
 
-        median_cases = correlation_data[
-            (correlation_data['od_flow_ratio'] >= lower_bound) &
-            (correlation_data['od_flow_ratio'] <= upper_bound)
+        median_cases = correlation_data_valid[
+            (correlation_data_valid['od_flow_ratio'] >= lower_bound) &
+            (correlation_data_valid['od_flow_ratio'] <= upper_bound)
         ].copy()
 
         # 选择10个代表性案例
@@ -1272,24 +1587,35 @@ class DetailedCorrelationAnalyzer:
             }
             detailed_cases.append(case_info)
 
-        analysis_result = {
-            'analysis_type': analysis_type,
+        # 分析结果
+        analysis_results = {
             'median_ratio': median_ratio,
-            'total_cases': len(correlation_data),
-            'median_range_cases': len(median_cases),
+            'case_count': len(median_cases),
             'sample_cases': detailed_cases,
-            'ratio_distribution': {
-                'min': correlation_data['od_flow_ratio'].min(),
-                'q25': correlation_data['od_flow_ratio'].quantile(0.25),
-                'median': median_ratio,
-                'q75': correlation_data['od_flow_ratio'].quantile(0.75),
-                'max': correlation_data['od_flow_ratio'].max(),
-                'std': correlation_data['od_flow_ratio'].std()
+            'analysis_summary': {
+                'median_od_flow_ratio': median_ratio,
+                'case_range': f'{lower_bound:.3f} - {upper_bound:.3f}',
+                'total_cases_in_range': len(median_cases),
+                'sampled_cases': len(detailed_cases)
+            },
+            'business_interpretation': {
+                'expected_behavior': '收费广场入口流量应与OD起点数量高度一致（比值接近1.0）',
+                'actual_finding': f'中位数OD/流量比为{median_ratio:.1%}',
+                'quality_assessment': 'abnormal' if median_ratio < 0.8 else 'normal',
+                'recommended_actions': [
+                    '检查流量数据采集是否存在重复计数问题',
+                    '验证OD数据的完整性和时间匹配',
+                    '分析数据关联逻辑是否正确',
+                    '对比历史数据趋势，确定是否为系统性问题'
+                ] if median_ratio < 0.8 else [
+                    '数据质量良好，符合业务预期',
+                    '继续监控数据一致性'
+                ]
             }
         }
 
-        logger.info(f"收费广场{analysis_type}中位数比例案例分析完成")
-        return analysis_result
+        logger.info(f"收费广场{analysis_type}中位数案例分析完成")
+        return analysis_results
 
     def analyze_toll_square_balance(self):
         """收费广场进出流量平衡分析"""
@@ -1321,7 +1647,6 @@ class DetailedCorrelationAnalyzer:
         balance_analysis = {
             'total_records': len(balance_data),
             'unique_squares': balance_data['square_code'].nunique(),
-            'avg_balance_ratio': balance_data['flow_balance_ratio'].mean(),
             'balance_ratio_stats': {
                 'mean': balance_data['flow_balance_ratio'].mean(),
                 'median': balance_data['flow_balance_ratio'].median(),
@@ -1490,25 +1815,121 @@ class DetailedCorrelationAnalyzer:
         """生成收费广场分析部分"""
         html = """
         <div class="section">
-            <h2>2. 收费广场起点关联分析</h2>
+            <h2>2. 收费广场入口关联分析</h2>
+            <div class="alert">
+                <strong>业务逻辑：</strong>收费广场入口流量应与以该收费广场为起点的OD数量高度一致（接近1:1关系）
+            </div>
         """
 
-        # 基本统计（类似门架部分）
+        # 基本统计
         stats = results
         html += f"""
             <h3>基本统计信息</h3>
             <div class="metric">关联记录数: <strong>{stats['total_records']:,}</strong></div>
             <div class="metric">涉及收费广场数: <strong>{stats['unique_locations']}</strong></div>
             <div class="metric">相关系数: <strong>{stats['correlation_coefficient']:.3f}</strong></div>
-            <div class="metric">平均OD/流量比: <strong>{stats['od_flow_ratio_stats']['mean']:.3f}</strong></div>
-            <div class="metric">中位数OD/流量比: <strong>{stats['od_flow_ratio_stats']['median']:.3f}</strong></div>
         """
 
-        # 其他部分类似门架分析...
+        # 数据质量评估（如果存在）
+        if 'data_quality_assessment' in stats:
+            quality = stats['data_quality_assessment']
+            html += f"""
+                <h3>数据质量评估</h3>
+                <div class="alert alert-{'success' if quality['normal_ratio'] > 0.8 else 'warning'}">
+                    <strong>预期：</strong>{quality['expected_consistency']}<br>
+                    <strong>实际：</strong>{quality['actual_consistency']}
+                </div>
+                <div class="metric">正常记录: <strong>{quality['normal_records']:,}</strong> ({quality['normal_ratio']:.1%})</div>
+                <div class="metric">异常记录: <strong>{quality['abnormal_records']:,}</strong> ({1-quality['normal_ratio']:.1%})</div>
+            """
+
+        # 流量/OD比分布（更符合业务逻辑）
+        if 'flow_od_ratio_stats' in stats:
+            ratio_stats = stats['flow_od_ratio_stats']
+            html += f"""
+                <h3>流量/OD比分布（核心指标）</h3>
+                <div class="alert alert-info">
+                    <strong>说明：</strong>此比值应接近1.0，表示流量数据与OD数据高度一致
+                </div>
+                <table>
+                    <tr><th>统计量</th><th>数值</th><th>评估</th></tr>
+                    <tr><td>平均值</td><td>{ratio_stats['mean']:.3f}</td><td>{'✓ 正常' if 0.8 <= ratio_stats['mean'] <= 1.2 else '⚠ 异常'}</td></tr>
+                    <tr><td>中位数</td><td>{ratio_stats['median']:.3f}</td><td>{'✓ 正常' if 0.8 <= ratio_stats['median'] <= 1.2 else '⚠ 异常'}</td></tr>
+                    <tr><td>标准差</td><td>{ratio_stats['std']:.3f}</td><td>{'✓ 稳定' if ratio_stats['std'] < 0.3 else '⚠ 波动大'}</td></tr>
+                    <tr><td>最小值</td><td>{ratio_stats['min']:.3f}</td><td></td></tr>
+                    <tr><td>最大值</td><td>{ratio_stats['max']:.3f}</td><td></td></tr>
+                </table>
+            """
+
+        # OD/流量比分布（传统指标，但重新解释）
+        if 'od_flow_ratio_stats' in stats:
+            od_ratio_stats = stats['od_flow_ratio_stats']
+            html += f"""
+                <h3>OD/流量比分布（辅助指标）</h3>
+                <div class="alert alert-warning">
+                    <strong>重要提醒：</strong>如果此比值约为50%，说明流量数据是OD数据的2倍，存在数据质量问题需要调查
+                </div>
+                <table>
+                    <tr><th>统计量</th><th>数值</th><th>问题评估</th></tr>
+                    <tr><td>平均值</td><td>{od_ratio_stats['mean']:.3f}</td><td>{'🔴 数据异常' if od_ratio_stats['mean'] < 0.8 else '✓ 正常'}</td></tr>
+                    <tr><td>中位数</td><td>{od_ratio_stats['median']:.3f}</td><td>{'🔴 数据异常' if od_ratio_stats['median'] < 0.8 else '✓ 正常'}</td></tr>
+                    <tr><td>25%分位数</td><td>{od_ratio_stats['q25']:.4f}</td><td></td></tr>
+                    <tr><td>75%分位数</td><td>{od_ratio_stats['q75']:.4f}</td><td></td></tr>
+                </table>
+            """
+
+        # 数据质量问题分析
+        if 'od_flow_ratio_stats' in stats and stats['od_flow_ratio_stats']['mean'] < 0.8:
+            html += f"""
+                <h3>🔍 数据质量问题分析</h3>
+                <div class="alert alert-danger">
+                    <strong>发现问题：</strong>平均OD/流量比为{stats['od_flow_ratio_stats']['mean']:.1%}，远低于预期的80%-100%
+                    <br><strong>可能原因：</strong>
+                    <ul>
+                        <li>流量数据存在重复计算</li>
+                        <li>OD数据存在缺失或采样不完整</li>
+                        <li>数据时间范围不匹配</li>
+                        <li>数据关联逻辑有误</li>
+                    </ul>
+                    <br><strong>建议措施：</strong>
+                    <ul>
+                        <li>检查流量数据采集设备是否存在重复计数</li>
+                        <li>验证OD数据的完整性和准确性</li>
+                        <li>确认数据关联的时间和空间匹配逻辑</li>
+                    </ul>
+                </div>
+            """
+
+        # 车型对比（如果存在）
+        if 'vehicle_ratio_comparison' in stats:
+            vehicle_stats = stats['vehicle_ratio_comparison']
+            html += f"""
+                <h3>车型结构对比</h3>
+                <table>
+                    <tr><th>车型</th><th>OD数据占比</th><th>流量数据占比</th><th>差异</th><th>差异标准差</th></tr>
+                    <tr>
+                        <td>货车</td>
+                        <td>{vehicle_stats['od_truck_ratio_mean']:.1%}</td>
+                        <td>{vehicle_stats['flow_truck_ratio_mean']:.1%}</td>
+                        <td>{vehicle_stats['truck_ratio_diff_mean']:+.1%}</td>
+                        <td>{vehicle_stats['truck_ratio_diff_std']:.3f}</td>
+                    </tr>
+                    <tr>
+                        <td>客车</td>
+                        <td>{vehicle_stats['od_passenger_ratio_mean']:.1%}</td>
+                        <td>{vehicle_stats['flow_passenger_ratio_mean']:.1%}</td>
+                        <td>{vehicle_stats['passenger_ratio_diff_mean']:+.1%}</td>
+                        <td>{vehicle_stats['passenger_ratio_diff_std']:.3f}</td>
+                    </tr>
+                </table>
+            """
+
+        # 时间模式
+        if 'time_patterns' in results:
+            html += self._generate_time_patterns_table(results['time_patterns'])
+
         html += "</div>"
         return html
-
-
 
     def _generate_time_patterns_table(self, patterns):
         """生成时间模式表格"""
@@ -1563,25 +1984,42 @@ class DetailedCorrelationAnalyzer:
         html += "</div>"
         return html
 
-    def export_detailed_data(self, gantry_results, toll_square_results, output_dir):
-        """导出详细数据到CSV文件"""
-        logger.info("导出详细关联分析数据")
+    def export_detailed_data(self):
+        """导出详细分析数据"""
+        output_dir = os.path.join(os.path.dirname(__file__), 'detailed_correlation_output')
+        os.makedirs(output_dir, exist_ok=True)
 
-        import json
-
-        # 导出门架分析结果
-        if gantry_results:
-            gantry_file = os.path.join(output_dir, "detailed_gantry_correlation.json")
-            with open(gantry_file, 'w', encoding='utf-8') as f:
-                json.dump(gantry_results, f, ensure_ascii=False, indent=2, default=str)
+        # 导出各类关联分析数据
+        if hasattr(self, 'gantry_results'):
+            gantry_file = os.path.join(output_dir, 'detailed_gantry_correlation.json')
+            self._save_json_results(self.gantry_results, gantry_file)
             logger.info(f"门架关联分析数据已导出: {gantry_file}")
 
-        # 导出收费广场分析结果
-        if toll_square_results:
-            toll_square_file = os.path.join(output_dir, "detailed_toll_square_correlation.json")
-            with open(toll_square_file, 'w', encoding='utf-8') as f:
-                json.dump(toll_square_results, f, ensure_ascii=False, indent=2, default=str)
+        if hasattr(self, 'toll_square_results'):
+            toll_square_file = os.path.join(output_dir, 'detailed_toll_square_correlation.json')
+            self._save_json_results(self.toll_square_results, toll_square_file)
             logger.info(f"收费广场关联分析数据已导出: {toll_square_file}")
+
+    def _save_json_results(self, data, filepath):
+        """保存JSON格式的结果"""
+        import json
+        
+        # 处理不能序列化的数据类型
+        def default_serializer(obj):
+            if hasattr(obj, 'isoformat'):  # datetime objects
+                return obj.isoformat()
+            elif hasattr(obj, 'item'):  # numpy scalars
+                return obj.item()
+            elif str(type(obj)).startswith('<class \'numpy.'):
+                return str(obj)
+            else:
+                return str(obj)
+        
+        try:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2, default=default_serializer)
+        except Exception as e:
+            logger.warning(f"保存JSON文件失败: {e}")
 
 def parse_datetime(date_str):
     """解析日期时间字符串，支持多种格式"""
@@ -1606,19 +2044,26 @@ def parse_datetime(date_str):
 def main():
     """主函数"""
     import argparse
-
+    
     parser = argparse.ArgumentParser(description='详细起始点关联分析')
-    parser.add_argument('--start-date', required=True, help='开始日期时间 (YYYY-MM-DD 或 YYYY-MM-DD HH:MM:SS)')
-    parser.add_argument('--end-date', required=True, help='结束日期时间 (YYYY-MM-DD 或 YYYY-MM-DD HH:MM:SS)')
-    parser.add_argument('--sample-size', type=int, default=None, help='样本大小（可选，不指定则使用全量数据）')
+    parser.add_argument('--start-date', required=True, help='开始日期时间（格式: YYYY-MM-DD 或 YYYY-MM-DD HH:MM:SS）')
+    parser.add_argument('--end-date', required=True, help='结束日期时间（格式: YYYY-MM-DD 或 YYYY-MM-DD HH:MM:SS）')
     parser.add_argument('--output-dir', default='detailed_correlation_output', help='输出目录')
 
     args = parser.parse_args()
 
     # 解析和验证日期时间
     try:
-        start_dt = parse_datetime(args.start_date)
-        end_dt = parse_datetime(args.end_date)
+        # 尝试解析完整的日期时间格式
+        if ' ' in args.start_date:
+            start_dt = datetime.strptime(args.start_date, '%Y-%m-%d %H:%M:%S')
+        else:
+            start_dt = datetime.strptime(args.start_date, '%Y-%m-%d')
+            
+        if ' ' in args.end_date:
+            end_dt = datetime.strptime(args.end_date, '%Y-%m-%d %H:%M:%S')
+        else:
+            end_dt = datetime.strptime(args.end_date, '%Y-%m-%d')
 
         if start_dt >= end_dt:
             print("❌ 错误: 开始时间必须早于结束时间")
@@ -1636,8 +2081,6 @@ def main():
         print(f"❌ 日期时间格式错误: {e}")
         return 1
 
-
-
     # 创建输出目录
     os.makedirs(args.output_dir, exist_ok=True)
 
@@ -1645,12 +2088,9 @@ def main():
     print("详细起始点关联分析工具")
     print("=" * 80)
     print(f"分析参数:")
-    print(f"  开始日期: {args.start_date}")
-    print(f"  结束日期: {args.end_date}")
-    if args.sample_size:
-        print(f"  样本大小: {args.sample_size:,}")
-    else:
-        print(f"  数据模式: 全量数据")
+    print(f"  开始时间: {args.start_date}")
+    print(f"  结束时间: {args.end_date}")
+    print(f"  数据模式: 全量数据（通过时间范围控制）")
     print(f"  输出目录: {args.output_dir}")
     print()
 
@@ -1667,7 +2107,7 @@ def main():
 
         # 加载数据
         print("1. 加载数据...")
-        analyzer.load_data(start_date_sql, end_date_sql, args.sample_size)
+        analyzer.load_data(start_date_sql, end_date_sql)
 
         # 门架关联分析
         print("2. 执行门架关联分析...")
@@ -1750,7 +2190,7 @@ def main():
         if toll_square_balance_results:
             print(f"📊 收费广场流量平衡分析:")
             print(f"   涉及收费广场数: {toll_square_balance_results['unique_squares']}")
-            print(f"   平均进出流量比: {toll_square_balance_results['avg_balance_ratio']:.3f}")
+            print(f"   中位数进出流量比: {toll_square_balance_results['balance_ratio_stats']['median']:.3f}")
             print(f"   不平衡收费广场数: {toll_square_balance_results['imbalanced_squares']['count']}")
 
         print(f"\n📁 结果保存在: {args.output_dir}")
